@@ -1,55 +1,54 @@
 class JumpAddressError(Exception):
-	pass
+    pass
 
 
 class StackSizeError(Exception):
-	pass
+    pass
 
 
 class InstructionAddressError(Exception):
-	pass
+    pass
 
 
 class IllegalInstructionError(Exception):
-	pass
+    pass
 
 
 class DependencyError(Exception):
-	pass
+    pass
 
 
 class TraceError(Exception):
-	pass
+    pass
 
 
 class InternalFunctionError(Exception):
-	pass
+    pass
 
 
 class TimeoutException(Exception):
-	pass
+    pass
 
 
 class ValidationError(Exception):
-	pass
+    pass
 
 
 class InputError(Exception):
-	pass
+    pass
 
 
 class OperationError(Exception):
-	pass
+    pass
 
 
 class PoisonException(Exception):
-	pass
+    pass
 
 
 class TraceException(Exception):
-	pass
+    pass
 
 
 class MemoryException(Exception):
-	pass
-
+    pass

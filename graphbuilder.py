@@ -91,7 +91,7 @@ class GraphBuilder(Disassembler):
         for cur_id, signature in self.__signature_blocks.items():
             func = self.__create_external_function(cur_id, signature)
             self.external_functions[signature] = func
-        # func.visualize_function()
+            # func.visualize_function()
 
     def __create_external_function(self, cur_id, signature):
         entry_ids = self.graph.get_successor_ids(cur_id)

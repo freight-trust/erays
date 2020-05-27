@@ -120,7 +120,7 @@ class DuplicateResolver:
             raise StackSizeError("stack size not found")
         return candidates[stack_size]
 
-    # def lookup_natural(self, block_id):
-    # 	if block_id not in self.__naturals:
-    # 		return None
-    # 	return self.__naturals[block_id]
+        # def lookup_natural(self, block_id):
+        # 	if block_id not in self.__naturals:
+        # 		return None
+        # 	return self.__naturals[block_id]
