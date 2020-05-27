@@ -26,7 +26,7 @@ class Lifter(GraphBuilder):
 
         for func in self.get_all_functions():
             self.__lift_function(func)
-        # self.__split_hub_blocks(func)
+            # self.__split_hub_blocks(func)
 
     def __label_function_boundaries(self):
         # TODO: extend to include undetected callers ?
@@ -234,7 +234,7 @@ class Lifter(GraphBuilder):
     def debug_functions(self):
         for func in self.get_all_functions():
             func.debug_function()
-        # func.visualize_function()
+            # func.visualize_function()
 
     @staticmethod
     def __split_hub_blocks(func):

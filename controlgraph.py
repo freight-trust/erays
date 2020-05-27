@@ -123,7 +123,7 @@ class ControlGraph(object):
         if len(suc_ids) == 2 and block_id not in suc_ids:
             return suc_ids
 
-        # def validate_path_exists(self, path):
+            # def validate_path_exists(self, path):
 
     # 	parent_id = path[0]
     # 	for block_id in path[1:]:
@@ -473,9 +473,8 @@ class ControlGraph(object):
             # 	dot_file.write("%d [style=filled, fillcolor=%s]\n" % (cur_id, color))
             # else:
             block = self.basic_blocks[cur_id]
-            # label = block.dot_format_block(0).lower()
             if block.__class__.__name__ == 'Seq':
-                label = hex(block.get_entry_address()) + "\l...\l" + hex(block.get_exit_address())
+                label = block.dot_format_block(0).lower()
             else:
                 label = "\l".join(map(str, block.get_items())) + "\l"
 
