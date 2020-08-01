@@ -3,7 +3,9 @@ from __future__ import print_function
 import signal
 import sys
 from datetime import datetime
-from multiprocessing import Lock, Manager, Process
+from multiprocessing import Lock
+from multiprocessing import Manager
+from multiprocessing import Process
 from os import walk
 
 from aggregatortester import AggregatorTester

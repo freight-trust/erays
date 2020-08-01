@@ -1,6 +1,8 @@
 from bytecodes import *
 from ceptions import IllegalInstructionError
-from opcodes import actions, dup_ops, swap_ops
+from opcodes import actions
+from opcodes import dup_ops
+from opcodes import swap_ops
 
 
 def union(list_1, list_2):

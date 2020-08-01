@@ -1,4 +1,5 @@
-from ceptions import DependencyError, JumpAddressError
+from ceptions import DependencyError
+from ceptions import JumpAddressError
 from controlgraph import *
 from image import Image
 from imagetracker import ImageTracker

@@ -6,7 +6,8 @@ from ceptions import StackSizeError
 from graphbuilder import GraphBuilder
 from instructionblock import InstructionBlock
 from instructions import *
-from interpreter import BasicInterpreter, DuplicateInterpreter
+from interpreter import BasicInterpreter
+from interpreter import DuplicateInterpreter
 from opcodes import *
 from structures import InternalFunction
 

@@ -5,7 +5,8 @@ from copy import deepcopy
 
 from bytecodes import *
 from ceptions import InternalFunctionError
-from opcodes import INTERNAL_RETURN_OPCODE, exit_ops
+from opcodes import exit_ops
+from opcodes import INTERNAL_RETURN_OPCODE
 
 
 class BytecodeBlock(object):

@@ -1,9 +1,13 @@
 import math
 import sys
 
-from baseexecutor import execute_binop, execute_monop
-from blockstate import ConstantState, CopyState, MemState
-from instructions import Instruction, MoveInstruction
+from baseexecutor import execute_binop
+from baseexecutor import execute_monop
+from blockstate import ConstantState
+from blockstate import CopyState
+from blockstate import MemState
+from instructions import Instruction
+from instructions import MoveInstruction
 from lifter import Lifter
 from opcodes import *
 from structures import InternalFunction

@@ -1,6 +1,8 @@
 from copy import deepcopy
 
-from ceptions import OperationError, PoisonException, ValidationError
+from ceptions import OperationError
+from ceptions import PoisonException
+from ceptions import ValidationError
 from graphbuilder import FALLBACK_SIGNATURE
 from instructions import *
 from memorymodel import MemoryModel

@@ -1,8 +1,14 @@
 import json
 import sys
 
-from ceptions import InputError, TraceError, TraceException, ValidationError
-from contextops import READ_POISON, ContextOps, EffectOps, FreeOps
+from ceptions import InputError
+from ceptions import TraceError
+from ceptions import TraceException
+from ceptions import ValidationError
+from contextops import ContextOps
+from contextops import EffectOps
+from contextops import FreeOps
+from contextops import READ_POISON
 from graphbuilder import FALLBACK_SIGNATURE
 from opcodes import *
 

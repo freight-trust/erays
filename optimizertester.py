@@ -4,7 +4,8 @@ import sys
 from ceptions import TimeoutException
 from instructionexecutor import InstructionExecutor
 from optimizer import Optimizer
-from tracereader import EffectReader, TraceReader
+from tracereader import EffectReader
+from tracereader import TraceReader
 
 
 def handler(signum, frame):

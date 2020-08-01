@@ -1,5 +1,6 @@
 from bytecodes import *
-from ceptions import JumpAddressError, StackSizeError
+from ceptions import JumpAddressError
+from ceptions import StackSizeError
 
 
 def unfold_constant(bytecode):

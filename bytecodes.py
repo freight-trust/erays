@@ -1,4 +1,5 @@
-from opcodes import bin_ops, mono_ops
+from opcodes import bin_ops
+from opcodes import mono_ops
 
 
 class ByteCode(object):

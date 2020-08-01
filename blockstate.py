@@ -1,4 +1,7 @@
-from opcodes import mem_read_ops, mem_write_ops, order_ops, throw_away_ops
+from opcodes import mem_read_ops
+from opcodes import mem_write_ops
+from opcodes import order_ops
+from opcodes import throw_away_ops
 
 TOP = "T"
 
