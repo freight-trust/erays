@@ -8,7 +8,8 @@ from opcodes import *
 from baseexecutor import execute_binop, execute_monop
 from instructions import MoveInstruction, Instruction
 
-import sys, math
+import sys
+import math
 
 
 def apply_peephole_optimizations(func):
@@ -94,7 +95,8 @@ def __rewrite_shift(i, instruction, block):
             return
         exp = int(math.log(num, 2))
         new_instruction = \
-            Instruction("SR", [instruction.reads[0], exp], instruction.writes, address)
+            Instruction("SR", [instruction.reads[0], exp],
+                        instruction.writes, address)
         block.set_instruction(i, new_instruction)
     elif opcode == "MUL":
         num = instruction.reads[0]
@@ -104,7 +106,8 @@ def __rewrite_shift(i, instruction, block):
             return
         exp = int(math.log(num, 2))
         new_instruction = \
-            Instruction("SL", [instruction.reads[1], exp], instruction.writes, address)
+            Instruction("SL", [instruction.reads[1], exp],
+                        instruction.writes, address)
         block.set_instruction(i, new_instruction)
 
 
@@ -152,7 +155,7 @@ def __size_two_rewrites(block):
 
 def __remove_double_mask(i, instruction_0, instruction_1, block):
     if instruction_0.opcode != "AND" or \
-                    instruction_1.opcode != "AND":
+            instruction_1.opcode != "AND":
         return
     w_0 = instruction_0.writes[0]
     w_1 = instruction_1.writes[0]
@@ -160,8 +163,8 @@ def __remove_double_mask(i, instruction_0, instruction_1, block):
     reads_1 = instruction_1.reads
 
     if reads_0[0] != reads_1[0] or \
-                    w_0 != reads_1[1] or \
-                    w_0 != w_1:
+            w_0 != reads_1[1] or \
+            w_0 != w_1:
         return
     block.set_nop_instruction(i - 1)
     instruction_1.reads[1] = reads_0[1]
@@ -169,7 +172,7 @@ def __remove_double_mask(i, instruction_0, instruction_1, block):
 
 def __remove_address_mask(i, instruction_0, instruction_1, block):
     if instruction_0.opcode not in {"CALLER", "ADDRESS"} or \
-                    instruction_1.opcode != "AND":
+            instruction_1.opcode != "AND":
         return
     w_0 = instruction_0.writes[0]
     w_1 = instruction_1.writes[0]
@@ -183,8 +186,8 @@ def __remove_address_mask(i, instruction_0, instruction_1, block):
 
 def __remove_doube_iszero(i, instruction_0, instruction_1, block):
     if instruction_0.opcode != "ISZERO" or \
-                    instruction_1.opcode != "ISZERO" or \
-                    instruction_1.address != instruction_0.address + 1:
+            instruction_1.opcode != "ISZERO" or \
+            instruction_1.address != instruction_0.address + 1:
         return
     block.set_nop_instruction(i - 1)
     block.set_nop_instruction(i)
@@ -193,13 +196,14 @@ def __remove_doube_iszero(i, instruction_0, instruction_1, block):
 def __rewrite_negate_ops(i, instruction_0, instruction_1, block):
     opcode = instruction_0.opcode
     if instruction_0.opcode not in negate_ops or \
-                    instruction_1.opcode != "ISZERO" or \
-                    instruction_1.address != instruction_0.address + 1:
+            instruction_1.opcode != "ISZERO" or \
+            instruction_1.address != instruction_0.address + 1:
         return
     block.set_nop_instruction(i - 1)
     opcode = negate_ops[opcode]
     new_instruction = \
-        Instruction(opcode, instruction_0.reads, instruction_0.writes, instruction_0.address)
+        Instruction(opcode, instruction_0.reads,
+                    instruction_0.writes, instruction_0.address)
     block.set_instruction(i, new_instruction)
 
 
@@ -216,7 +220,8 @@ def __sha3_rewrites(block):
                     values, indices = zip(*items)
                     for i in indices:
                         block.set_nop_instruction(i)
-                    operation = Instruction("SHA3R", list(values), instruction.writes, instruction.address)
+                    operation = Instruction("SHA3R", list(
+                        values), instruction.writes, instruction.address)
                     block.set_instruction(index, operation)
         local_memory.add_mapping(index, instruction)
 
@@ -225,12 +230,14 @@ def rewrite_free_ptr(block):
     for i, instruction in enumerate(block.get_instructions()):
         opcode = instruction.opcode
         if opcode == "MLOAD" and \
-                        instruction.reads[0] == 64:
-            new_instruction = MoveInstruction("MOVE", ["$m"], instruction.writes, instruction.address)
+                instruction.reads[0] == 64:
+            new_instruction = MoveInstruction(
+                "MOVE", ["$m"], instruction.writes, instruction.address)
             block.set_instruction(i, new_instruction)
         elif opcode == "MSTORE" and \
-                        instruction.reads[0] == 64:
-            new_instruction = MoveInstruction("MOVE", [instruction.reads[1]], ["$m"], instruction.address)
+                instruction.reads[0] == 64:
+            new_instruction = MoveInstruction("MOVE", [instruction.reads[1]], [
+                                              "$m"], instruction.address)
             block.set_instruction(i, new_instruction)
 
 

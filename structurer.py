@@ -89,7 +89,8 @@ class Structurer(Aggregator):
             return a0
 
         new_id = graph.allocate_id()
-        block = IfThen(new_id, graph[a2].get_entry_address(), graph[a0], graph[a1])
+        block = IfThen(
+            new_id, graph[a2].get_entry_address(), graph[a0], graph[a1])
         graph.add_block(block)
         graph.transfer_predecessors(a0, new_id)
         graph.remove_blocks({a0, a1})
@@ -109,7 +110,8 @@ class Structurer(Aggregator):
             return a0
         suc_address = graph[a3].get_entry_address()
         new_id = graph.allocate_id()
-        block = IfThenElse(new_id, suc_address, graph[a0], graph[a1], graph[a2])
+        block = IfThenElse(new_id, suc_address,
+                           graph[a0], graph[a1], graph[a2])
         graph.add_block(block)
         graph.transfer_predecessors(a0, new_id)
         graph.add_edge(new_id, a3)

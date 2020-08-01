@@ -47,7 +47,8 @@ class Aggregator(Optimizer):
 
     def __convert_function(self, func):
         for block in func.graph:
-            new_block = ExpressionBlock(block.get_id(), block.get_entry_address())
+            new_block = ExpressionBlock(
+                block.get_id(), block.get_entry_address())
             new_block.exit_stack_size = block.exit_stack_size
             for instruction in block:
                 expression = self.__convert_instruction(instruction)
@@ -124,7 +125,7 @@ class Aggregator(Optimizer):
             writes = expression.get_write_registers()
             opcode = expression.opcode
             if "INTCALL" in opcode or \
-                            len(writes) != 1:
+                    len(writes) != 1:
                 continue
 
             j = get_single_usage(i, expressions, live)
@@ -152,7 +153,7 @@ class Aggregator(Optimizer):
             reads = expression.get_read_registers()
             opcode = expression.opcode
             if len(writes & out) == 0 and \
-                            opcode in throw_away_ops | {"SLOAD"}:
+                    opcode in throw_away_ops | {"SLOAD"}:
                 change = True
                 continue
             else:

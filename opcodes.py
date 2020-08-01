@@ -427,19 +427,19 @@ call_ops = {
 }
 
 mem_write_ops = {
-                    "CALLDATACOPY",
-                    "CODECOPY",
-                    "EXTCODECOPY",
-                    "MSTORE",
-                    "MSTORE8",
-                } | call_ops
+    "CALLDATACOPY",
+    "CODECOPY",
+    "EXTCODECOPY",
+    "MSTORE",
+    "MSTORE8",
+} | call_ops
 
 mem_read_ops = {
-                   "MLOAD",
-                   "SHA3",
-                   "CREATE",
-                   "RETURN"
-               } | log_ops | call_ops
+    "MLOAD",
+    "SHA3",
+    "CREATE",
+    "RETURN"
+} | log_ops | call_ops
 
 order_ops = {
     "GAS",
@@ -463,14 +463,14 @@ fake_ops = {
 }
 
 free_ops = set(opcodes.values()) \
-           - push_ops \
-           - mem_read_ops \
-           - mem_write_ops \
-           - {"SSTORE", "SLOAD"} \
-           - dup_ops \
-           - swap_ops \
-           - exit_ops \
-           - jump_ops
+    - push_ops \
+    - mem_read_ops \
+    - mem_write_ops \
+    - {"SSTORE", "SLOAD"} \
+    - dup_ops \
+    - swap_ops \
+    - exit_ops \
+    - jump_ops
 
 # these operations capture the result of an execution
 # SSTORE is handled elsewhere

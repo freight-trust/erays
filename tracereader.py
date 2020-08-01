@@ -4,7 +4,8 @@ from contextops import ContextOps, FreeOps, READ_POISON, EffectOps
 
 from graphbuilder import FALLBACK_SIGNATURE
 
-import sys, json
+import sys
+import json
 
 
 def load_trace(line):
@@ -205,7 +206,8 @@ class EffectReader(TraceReader):
             if opcode == "DELEGATECALL":
                 inputs = (opcode, inputs[1], in_chunk, out_offset, out_size)
             else:
-                inputs = (opcode, inputs[1], inputs[2], in_chunk, out_offset, out_size)
+                inputs = (opcode, inputs[1], inputs[2],
+                          in_chunk, out_offset, out_size)
             self.effect_ops.add_mapping(inputs, output)
         elif opcode == "CREATE":
             offset, size = inputs[2], inputs[3]

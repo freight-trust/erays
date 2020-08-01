@@ -77,7 +77,8 @@ class ExpressionBlock:
         results = []
         for i, expression in enumerate(self.__expressions):
             if i == len(self.__expressions) - 1:
-                results.append(prefix + expression.get_inverted_condition() + "{")
+                results.append(
+                    prefix + expression.get_inverted_condition() + "{")
             else:
                 results.append(prefix + str(expression))
         return "\l".join(results) + "\l"

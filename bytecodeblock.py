@@ -2,7 +2,8 @@ from ceptions import InternalFunctionError
 from bytecodes import *
 from opcodes import INTERNAL_RETURN_OPCODE, exit_ops
 
-import array, hashlib
+import array
+import hashlib
 import operator
 from copy import deepcopy
 
@@ -70,12 +71,13 @@ class BytecodeBlock(object):
         push_bytecode = self.__items[-2]
 
         return exit_bytecode.opcode == "JUMP" \
-               and isinstance(push_bytecode, PushByteCode) \
-               and push_bytecode.get_value() in {2, 0}
+            and isinstance(push_bytecode, PushByteCode) \
+            and push_bytecode.get_value() in {2, 0}
 
     def get_function_signature(self):
         bytecodes = self.__items
-        if len(self.__items) < 5: return -1
+        if len(self.__items) < 5:
+            return -1
         bytecode_1 = bytecodes[-5]
         bytecode_2 = bytecodes[-4]
         bytecode_3 = bytecodes[-3]
@@ -94,7 +96,8 @@ class BytecodeBlock(object):
                 and bytecode_5.opcode == "JUMPI":
             return bytecode_1.get_value()
 
-        if len(self.__items) < 6: return -1
+        if len(self.__items) < 6:
+            return -1
         bytecode_0 = bytecodes[-6]
 
         if bytecode_0.opcode == "DUP1" \
@@ -112,7 +115,8 @@ class BytecodeBlock(object):
 
     def insert_assert(self):
         jumpi_bytecode = self.__items[-1]
-        assert_bytecode = ByteCode("ASSERT", "", jumpi_bytecode.get_address(), -1)
+        assert_bytecode = ByteCode(
+            "ASSERT", "", jumpi_bytecode.get_address(), -1)
         self.insert(assert_bytecode, -2)
         jumpi_bytecode.opcode = "JUMP"
 
@@ -125,9 +129,11 @@ class BytecodeBlock(object):
             exit_bytecode.opcode = "POP"
         else:
             assert exit_bytecode.opcode != "JUMPI"
-        intcall_bytecode = ByteCode(opcode, "gg", exit_bytecode.get_address(), 1)
+        intcall_bytecode = ByteCode(
+            opcode, "gg", exit_bytecode.get_address(), 1)
         new_block.append(intcall_bytecode)
-        push_bytecode = PushByteCode("PUSH1", "", exit_bytecode.get_address(), 2)
+        push_bytecode = PushByteCode(
+            "PUSH1", "", exit_bytecode.get_address(), 2)
         address = caller_end.get_entry_address()
         push_bytecode.set_dependency(0, address)
 
@@ -146,7 +152,8 @@ class BytecodeBlock(object):
         assert bytecode_0.opcode == "JUMP"
 
         new_block.__items[-1] = ByteCode("POP", "gg", bytecode_0.get_address())
-        intreturn_bytecode = ByteCode(INTERNAL_RETURN_OPCODE, "gg", bytecode_0.get_address())
+        intreturn_bytecode = ByteCode(
+            INTERNAL_RETURN_OPCODE, "gg", bytecode_0.get_address())
         new_block.append(intreturn_bytecode)
         new_block.__block_id = self.get_id()
         # new_block.debug_block()

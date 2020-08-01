@@ -4,7 +4,8 @@ from opcodes import *
 from bytecodes import *
 
 from itertools import groupby
-import sys, re
+import sys
+import re
 
 
 class Disassembler(object):

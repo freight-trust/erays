@@ -3,7 +3,8 @@ from lifter import Lifter
 from tracereader import TraceReader, EffectReader
 from ceptions import TimeoutException
 
-import signal, sys
+import signal
+import sys
 
 
 def handler(signum, frame):

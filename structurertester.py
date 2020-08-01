@@ -3,7 +3,8 @@ from structureexecutor import StructureExecutor
 from tracereader import EffectReader
 from ceptions import TimeoutException
 
-import signal, sys
+import signal
+import sys
 
 
 def handler(signum, frame):

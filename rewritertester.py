@@ -3,7 +3,8 @@ from rewriter import Rewriter
 from tracereader import EffectReader, TraceReader
 from ceptions import TimeoutException
 
-import signal, sys
+import signal
+import sys
 
 
 def handler(signum, frame):

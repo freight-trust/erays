@@ -5,7 +5,8 @@ from structures import ExternalFunction
 from opcodes import exit_ops
 from resolver import BasicResolver
 
-import sys, os
+import sys
+import os
 
 FALLBACK_SIGNATURE = 0xffffffff
 
@@ -100,27 +101,31 @@ class GraphBuilder(Disassembler):
         interpreter = BasicInterpreter(self.graph.get_blocks(), self.resolver)
 
         image = self.tracker.get_observed_image(entry_id)
-        graph, trackers = interpreter.explore_control_flow_graph(entry_id, image)
+        graph, trackers = interpreter.explore_control_flow_graph(
+            entry_id, image)
         f = ExternalFunction(signature, graph, trackers, (entry_id, None))
         # f.indirect_jumps = interpreter.ambiguous_blocks
         return f
 
     def __create_fallback_function(self):
         if len(self.__signature_blocks) == 0:
-            func = ExternalFunction(FALLBACK_SIGNATURE, self.graph, self.tracker, (0, None))
+            func = ExternalFunction(
+                FALLBACK_SIGNATURE, self.graph, self.tracker, (0, None))
             self.external_functions[FALLBACK_SIGNATURE] = func
         else:
             suc_ids = self.graph.get_successor_ids(0)
             suc_ids = suc_ids - set(self.__signature_blocks.keys())
             if len(suc_ids) == 1:
                 if 0 not in self.__signature_blocks:
-                    func = self.__create_external_function(0, FALLBACK_SIGNATURE)
+                    func = self.__create_external_function(
+                        0, FALLBACK_SIGNATURE)
                     self.external_functions[FALLBACK_SIGNATURE] = func
         # this sucks
         if FALLBACK_SIGNATURE not in self.external_functions:
             if not self.graph.has_block(1):
                 self.graph.add_block(self.get_blocks()[1])
-            func = ExternalFunction(FALLBACK_SIGNATURE, self.graph, self.tracker, (1, None))
+            func = ExternalFunction(
+                FALLBACK_SIGNATURE, self.graph, self.tracker, (1, None))
             self.external_functions[FALLBACK_SIGNATURE] = func
 
     def validate_execution_path(self, program_counters):

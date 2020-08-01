@@ -225,7 +225,8 @@ class BaseExecutor:
             if opcode == "DELEGATECALL":
                 inputs = (opcode, inputs[1], chunk, out_offset, out_size)
             else:
-                inputs = (opcode, inputs[1], inputs[2], chunk, out_offset, out_size)
+                inputs = (opcode, inputs[1], inputs[2],
+                          chunk, out_offset, out_size)
             # print(inputs)
             output = self.reader.do_effect_ops(inputs)
             self.memory.store(out_offset, out_size, output[1])
