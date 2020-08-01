@@ -16,7 +16,7 @@ def load_trace(line):
     except ValueError:
         raise InputError("JSON failed to parse")
 
-    if 'error' in info:
+    if "error" in info:
         raise InputError("JSON missing transaction")
     return info
 
@@ -24,19 +24,19 @@ def load_trace(line):
 class TraceReader:
     def __init__(self, line):
         info = load_trace(line)
-        self.code = info['code']
+        self.code = info["code"]
         self.__parse_signature(info)
-        self.error = info['result']['failed']
+        self.error = info["result"]["failed"]
 
         self.free_ops = FreeOps()
         self.memory_ops = ContextOps()
         self.storage_ops = ContextOps()
 
-        t_ = info['result']['structLogs']
-        self.trace = [i for i in t_ if i['depth'] == 1]
+        t_ = info["result"]["structLogs"]
+        self.trace = [i for i in t_ if i["depth"] == 1]
 
     def __parse_signature(self, info):
-        signature = info['input_data'][:10]
+        signature = info["input_data"][:10]
         if signature == "0x":
             self.signature = FALLBACK_SIGNATURE
         else:
@@ -47,7 +47,7 @@ class TraceReader:
 
     def __parse_trace(self):
         for index, item in enumerate(self.trace):
-            opcode = item['op'].encode('utf-8')
+            opcode = item["op"].encode("utf-8")
 
             try:
                 inputs, output = self.get_pair(opcode, index)
@@ -60,13 +60,15 @@ class TraceReader:
                 self.free_ops.add_mapping(inputs, output)
             if opcode in mem_read_ops:  # mem reads/writes are not mutually exclusive
                 self.memory_ops.add_mapping(inputs, output)
-            if opcode in mem_write_ops:  # there will be one in the context, and another as separator
+            if (
+                opcode in mem_write_ops
+            ):  # there will be one in the context, and another as separator
                 self.memory_ops.push_context(inputs)
             if opcode == "SLOAD":
                 self.storage_ops.add_mapping(inputs, output)
             elif opcode == "SSTORE":
                 self.storage_ops.push_context(inputs)
-            if 'error' in item:
+            if "error" in item:
                 self.error = True
 
         self.memory_ops.add_mapping(READ_POISON, (-1,))
@@ -95,7 +97,7 @@ class TraceReader:
         if count == 0:
             return []
         try:
-            values = self.trace[index]['stack'][-count:]
+            values = self.trace[index]["stack"][-count:]
         except IndexError:
             raise TraceException("trace ends with error")
         return [int(v, 16) for v in reversed(values)]
@@ -105,7 +107,7 @@ class TraceReader:
         begin = -1
         # print(begin_address)
         for index, item in enumerate(self.trace):
-            opcode = item['op'].encode('utf-8')
+            opcode = item["op"].encode("utf-8")
             try:
                 inputs, _ = self.get_pair(opcode, index)
             except TraceException:
@@ -113,7 +115,7 @@ class TraceReader:
             if opcode in mem_write_ops:
                 self.memory_ops.pop_context(inputs)
 
-            if item['pc'] == begin_address:
+            if item["pc"] == begin_address:
                 begin = index
                 break
 
@@ -159,7 +161,7 @@ class EffectReader(TraceReader):
 
     def __parse_trace(self):
         for index, item in enumerate(self.trace):
-            opcode = item['op'].encode('utf-8')
+            opcode = item["op"].encode("utf-8")
             # print(index)
             try:
                 inputs, output = self.get_pair(opcode, index)
@@ -179,16 +181,16 @@ class EffectReader(TraceReader):
                 self.storage_ops.add_mapping(inputs, output)
             elif opcode == "SSTORE":
                 self.storage_ops.push_context(inputs)
-            if 'error' in item:
+            if "error" in item:
                 self.error = True
         # self.effect_ops.debug_mapping()
         self.storage_ops.add_mapping(READ_POISON, (-1,))
 
     def get_memory_bytes(self, index, offset, size):
-        memory = self.trace[index]['memory']
+        memory = self.trace[index]["memory"]
         memory = "".join(memory)
         begin, end = offset * 2, (offset + size) * 2
-        return memory[begin:end].encode('utf-8')
+        return memory[begin:end].encode("utf-8")
 
     def __parse_effect_op(self, index, opcode, inputs, output):
         if opcode in log_ops | {"RETURN"}:
@@ -206,8 +208,7 @@ class EffectReader(TraceReader):
             if opcode == "DELEGATECALL":
                 inputs = (opcode, inputs[1], in_chunk, out_offset, out_size)
             else:
-                inputs = (opcode, inputs[1], inputs[2],
-                          in_chunk, out_offset, out_size)
+                inputs = (opcode, inputs[1], inputs[2], in_chunk, out_offset, out_size)
             self.effect_ops.add_mapping(inputs, output)
         elif opcode == "CREATE":
             offset, size = inputs[2], inputs[3]
@@ -243,13 +244,13 @@ class EffectReader(TraceReader):
     def fast_forward_trace(self, begin_address):
         begin = -1
         for index, item in enumerate(self.trace):
-            opcode = item['op'].encode('utf-8')
+            opcode = item["op"].encode("utf-8")
             try:
                 inputs, _ = self.get_pair(opcode, index)
             except TraceException:
                 break
 
-            if item['pc'] == begin_address:
+            if item["pc"] == begin_address:
                 begin = index
                 break
 

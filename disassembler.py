@@ -17,7 +17,7 @@ class Disassembler(object):
         self.raw_bytes = list()
         for i in range(0, len(binary), 2):
             try:
-                byte = int(binary[i:i + 2], 16)
+                byte = int(binary[i : i + 2], 16)
             except ValueError:
                 raise InputError("illegal hex character")
             self.raw_bytes.append(byte)
@@ -47,7 +47,7 @@ class Disassembler(object):
             self.swarm_hash_address = int(match.start() / 2)
 
     def __decode_data(self, begin, end):
-        data = self.raw_bytes[begin: end]
+        data = self.raw_bytes[begin:end]
         data = [hex(d)[2:] for d in data]
         data = [d.zfill(2) for d in data]
         data = "".join(data)
@@ -97,8 +97,7 @@ class Disassembler(object):
                 header_addresses.add(address)
                 split = False
 
-            if bytecode.opcode in exit_ops \
-                    or bytecode.opcode in jump_ops:
+            if bytecode.opcode in exit_ops or bytecode.opcode in jump_ops:
                 split = True
 
         basic_block = BytecodeBlock(self.__block_count)
@@ -117,7 +116,7 @@ class Disassembler(object):
     def __simplify_assertions(self):
         block_ids = sorted(self.__basic_blocks.keys())
         for i in range(len(block_ids) - 1):
-            id_0, id_1 = block_ids[i:i + 2]
+            id_0, id_1 = block_ids[i : i + 2]
             block_0 = self.__basic_blocks[id_0]
             block_1 = self.__basic_blocks[id_1]
             address = block_0.get_jumpi_address()
@@ -135,7 +134,7 @@ class Disassembler(object):
         return self.raw_bytes[b:e]
 
     def get_swarm_hash_bytes(self):
-        return self.raw_bytes[self.swarm_hash_address:]
+        return self.raw_bytes[self.swarm_hash_address :]
 
     def get_blocks(self):
         return self.__basic_blocks

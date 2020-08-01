@@ -69,12 +69,13 @@ def output_exception_report(path, exceptions, total):
     exception_report.write("=" * 20 + "\n")
 
     for count, (ex, code_size) in exceptions.items():
-        exception_report.write("%s : %d [%s] %s\n" % (
-            count, code_size, type(ex).__name__, str(ex)))
+        exception_report.write(
+            "%s : %d [%s] %s\n" % (count, code_size, type(ex).__name__, str(ex))
+        )
     exception_report.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if "-l" in sys.argv:
         tester = LifterTester
     elif "-o" in sys.argv:
@@ -90,7 +91,7 @@ if __name__ == '__main__':
     manager = Manager()
     exceptions = manager.dict()
     lock = Lock()
-    total = manager.Value('total', 0)
+    total = manager.Value("total", 0)
 
     target_files = []
     for (path, _, file_names) in walk(sys.argv[-1]):
@@ -98,13 +99,13 @@ if __name__ == '__main__':
             target_files.append(path + file_name)
         break
 
-    processes = \
-        [Process(target=worker, args=(lock, f, exceptions, total, tester))
-         for f in target_files]
+    processes = [
+        Process(target=worker, args=(lock, f, exceptions, total, tester))
+        for f in target_files
+    ]
     [process.start() for process in processes]
 
     [process.join() for process in processes]
     print("processes joined")
-    file_path = "reports/" + tester.__name__ + \
-        datetime.now().strftime('_%m-%d-%H-%M')
+    file_path = "reports/" + tester.__name__ + datetime.now().strftime("_%m-%d-%H-%M")
     output_exception_report(file_path, exceptions, total.value)

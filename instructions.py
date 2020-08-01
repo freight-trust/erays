@@ -121,12 +121,17 @@ class CallLoadInstruction(Instruction):
 
 class IntCallInstruction(Instruction):
     def __str__(self):
-        return "%s %s\t%s" % (self.opcode, self.writes_to_string(), self.reads_to_string())
+        return "%s %s\t%s" % (
+            self.opcode,
+            self.writes_to_string(),
+            self.reads_to_string(),
+        )
 
 
 class NopInstruction(Instruction):
     def __init__(self, address):
         Instruction.__init__(self, "NOP", [], [], address)
+
 
 # class SHA3Operation(Instruction):
 # 	def __init__(self, reads, writes, address):

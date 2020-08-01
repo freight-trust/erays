@@ -5,7 +5,7 @@ from memorymodel import MemoryModel
 from opcodes import *
 from copy import deepcopy
 
-WORD_MASK = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+WORD_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 INTRETURN_ADDRESS = -2
 
 
@@ -39,7 +39,7 @@ def execute_binop(inputs):
     elif opcode == "BYTE":
         arg_1 = ("%x" % arg_1).zfill(64)
         # TODO: idk if this is right
-        return int(arg_1[arg_0:arg_0 + 2], 16)
+        return int(arg_1[arg_0 : arg_0 + 2], 16)
     elif opcode == "LEQ":
         return arg_0 <= arg_1
     elif opcode == "GEQ":
@@ -110,10 +110,10 @@ class BaseExecutor:
         func = self.lifter.external_functions[self.signature]
         self.reader.fast_forward_trace(func.get_begin_address())
         state = self.reader.get_cur_state()
-        for index, value in enumerate(state['stack']):
+        for index, value in enumerate(state["stack"]):
             register = STACK_REGISTER + str(index)
             self.registers[register] = int(value, 16)
-        chunk = "".join([i.encode("utf-8") for i in state['memory']])
+        chunk = "".join([i.encode("utf-8") for i in state["memory"]])
         self.memory = MemoryModel(chunk)
         self.registers["$m"] = self.memory.load_as_int(64)
 
@@ -170,8 +170,7 @@ class BaseExecutor:
         elif opcode == "INTRET":
             return INTRETURN_ADDRESS  # recursive call returns
 
-        if opcode == "JUMP" or \
-                (opcode == "JUMPI" and inputs[2] != 0):
+        if opcode == "JUMP" or (opcode == "JUMPI" and inputs[2] != 0):
             return inputs[1]
         if opcode == "ASSERT" and inputs[1] == 0:
             raise PoisonException("assert")
@@ -225,8 +224,7 @@ class BaseExecutor:
             if opcode == "DELEGATECALL":
                 inputs = (opcode, inputs[1], chunk, out_offset, out_size)
             else:
-                inputs = (opcode, inputs[1], inputs[2],
-                          chunk, out_offset, out_size)
+                inputs = (opcode, inputs[1], inputs[2], chunk, out_offset, out_size)
             # print(inputs)
             output = self.reader.do_effect_ops(inputs)
             self.memory.store(out_offset, out_size, output[1])
@@ -298,13 +296,13 @@ class BaseExecutor:
         registers = set(self.registers.keys()) - {"$t", "$m"}
         registers = sorted(registers, key=lambda x: int(x[2:]))
         for r in registers:
-            value = ("%x" % self.registers[r])
+            value = "%x" % self.registers[r]
             print(r + ":\t" + value)
         # if "$t" in self.registers:
         for r in {"$t", "$m"}:
             if r not in self.registers:
                 continue
-            value = ("%x" % self.registers[r])
+            value = "%x" % self.registers[r]
             print(r + ":\t" + value)
         print("-" * 32)
 

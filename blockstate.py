@@ -1,6 +1,6 @@
 from opcodes import mem_write_ops, mem_read_ops, order_ops, throw_away_ops
 
-TOP = 'T'
+TOP = "T"
 
 
 class BlockState:
@@ -133,9 +133,9 @@ class ExpressionState(BlockState):
 
     def remove_mapping(self, register):
         if register in self.mapping:
-            del (self.mapping[register])
+            del self.mapping[register]
 
     def clear_entries(self, operations):
         for r, e in self.mapping.items():
             if e.contains_operations(operations):
-                del (self.mapping[r])
+                del self.mapping[r]

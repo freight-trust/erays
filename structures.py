@@ -30,8 +30,7 @@ class ExternalFunction(object):
         caller_begin_block = self.graph[caller_begin]
         caller_end_block = self.graph[caller_end]
 
-        new_block = \
-            caller_begin_block.insert_intcall(opcode, caller_end_block)
+        new_block = caller_begin_block.insert_intcall(opcode, caller_end_block)
         self.graph.replace_block(new_block)
 
         self.graph.remove_edge(caller_begin, callee_begin)
@@ -184,9 +183,9 @@ class InternalFunction(ExternalFunction):
         alpha, delta = self.action
         self.reads = to_stack_registers(range(entry_size - alpha, entry_size))
         self.reads.reverse()
-        self.writes = \
-            to_stack_registers(
-                range(entry_size - alpha, entry_size - alpha + delta))
+        self.writes = to_stack_registers(
+            range(entry_size - alpha, entry_size - alpha + delta)
+        )
         self.writes.reverse()
         return
 
@@ -282,7 +281,8 @@ class IfThen(Structure):
         results = [
             self.blocks[0].dot_format_if_header(depth),
             self.blocks[1].dot_format_block(depth + 1),
-            prefix + "}\l"]
+            prefix + "}\l",
+        ]
         return "".join(results)
 
 
@@ -311,7 +311,8 @@ class IfThenElse(Structure):
             self.blocks[1].dot_format_block(depth + 1),
             prefix + "} else {\l",
             self.blocks[2].dot_format_block(depth + 1),
-            prefix + "}\l"]
+            prefix + "}\l",
+        ]
         return "".join(results)
 
 

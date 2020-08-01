@@ -42,8 +42,7 @@ class ExpressionBlock:
             return self
 
     def remove_end_jump(self):
-        if len(self.__expressions) != 0 \
-                and self.__expressions[-1].opcode == "JUMP":
+        if len(self.__expressions) != 0 and self.__expressions[-1].opcode == "JUMP":
             self.__expressions = self.__expressions[:-1]
 
     def debug_block(self, depth=0):
@@ -77,8 +76,7 @@ class ExpressionBlock:
         results = []
         for i, expression in enumerate(self.__expressions):
             if i == len(self.__expressions) - 1:
-                results.append(
-                    prefix + expression.get_inverted_condition() + "{")
+                results.append(prefix + expression.get_inverted_condition() + "{")
             else:
                 results.append(prefix + str(expression))
         return "\l".join(results) + "\l"

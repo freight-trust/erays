@@ -9,8 +9,8 @@ opcodes = {
     0x07: "SMOD",
     0x08: "ADDMOD",
     0x09: "MULMOD",
-    0x0a: "EXP",
-    0x0b: "SIGNEXTEND",
+    0x0A: "EXP",
+    0x0B: "SIGNEXTEND",
     0x10: "LT",
     0x11: "GT",
     0x12: "SLT",
@@ -21,11 +21,9 @@ opcodes = {
     0x17: "OR",
     0x18: "XOR",
     0x19: "NOT",
-    0x1a: "BYTE",
-
+    0x1A: "BYTE",
     0x20: "SHA3",
     0x21: "NONZERO",
-
     0x30: "ADDRESS",
     0x31: "BALANCE",
     0x32: "ORIGIN",
@@ -36,17 +34,15 @@ opcodes = {
     0x37: "CALLDATACOPY",
     0x38: "CODESIZE",
     0x39: "CODECOPY",
-    0x3a: "GASPRICE",
-    0x3b: "EXTCODESIZE",
-    0x3c: "EXTCODECOPY",
-
+    0x3A: "GASPRICE",
+    0x3B: "EXTCODESIZE",
+    0x3C: "EXTCODECOPY",
     0x40: "BLOCKHASH",
     0x41: "COINBASE",
     0x42: "TIMESTAMP",
     0x43: "NUMBER",
     0x44: "DIFFICULTY",
     0x45: "GASLIMIT",
-
     0x50: "POP",
     0x51: "MLOAD",
     0x52: "MSTORE",
@@ -57,9 +53,8 @@ opcodes = {
     0x57: "JUMPI",
     0x58: "PC",
     0x59: "MSIZE",
-    0x5a: "GAS",
-    0x5b: "JUMPDEST",
-
+    0x5A: "GAS",
+    0x5B: "JUMPDEST",
     0x60: "PUSH1",
     0x61: "PUSH2",
     0x62: "PUSH3",
@@ -70,12 +65,12 @@ opcodes = {
     0x67: "PUSH8",
     0x68: "PUSH9",
     0x69: "PUSH10",
-    0x6a: "PUSH11",
-    0x6b: "PUSH12",
-    0x6c: "PUSH13",
-    0x6d: "PUSH14",
-    0x6e: "PUSH15",
-    0x6f: "PUSH16",
+    0x6A: "PUSH11",
+    0x6B: "PUSH12",
+    0x6C: "PUSH13",
+    0x6D: "PUSH14",
+    0x6E: "PUSH15",
+    0x6F: "PUSH16",
     0x70: "PUSH17",
     0x71: "PUSH18",
     0x72: "PUSH19",
@@ -86,13 +81,12 @@ opcodes = {
     0x77: "PUSH24",
     0x78: "PUSH25",
     0x79: "PUSH26",
-    0x7a: "PUSH27",
-    0x7b: "PUSH28",
-    0x7c: "PUSH29",
-    0x7d: "PUSH30",
-    0x7e: "PUSH31",
-    0x7f: "PUSH32",
-
+    0x7A: "PUSH27",
+    0x7B: "PUSH28",
+    0x7C: "PUSH29",
+    0x7D: "PUSH30",
+    0x7E: "PUSH31",
+    0x7F: "PUSH32",
     0x80: "DUP1",
     0x81: "DUP2",
     0x82: "DUP3",
@@ -103,13 +97,12 @@ opcodes = {
     0x87: "DUP8",
     0x88: "DUP9",
     0x89: "DUP10",
-    0x8a: "DUP11",
-    0x8b: "DUP12",
-    0x8c: "DUP13",
-    0x8d: "DUP14",
-    0x8e: "DUP15",
-    0x8f: "DUP16",
-
+    0x8A: "DUP11",
+    0x8B: "DUP12",
+    0x8C: "DUP13",
+    0x8D: "DUP14",
+    0x8E: "DUP15",
+    0x8F: "DUP16",
     0x90: "SWAP1",
     0x91: "SWAP2",
     0x92: "SWAP3",
@@ -120,27 +113,25 @@ opcodes = {
     0x97: "SWAP8",
     0x98: "SWAP9",
     0x99: "SWAP10",
-    0x9a: "SWAP11",
-    0x9b: "SWAP12",
-    0x9c: "SWAP13",
-    0x9d: "SWAP14",
-    0x9e: "SWAP15",
-    0x9f: "SWAP16",
-
-    0xa0: "LOG0",
-    0xa1: "LOG1",
-    0xa2: "LOG2",
-    0xa3: "LOG3",
-    0xa4: "LOG4",
-
-    0xf0: "CREATE",
-    0xf1: "CALL",
-    0xf2: "CALLCODE",
-    0xf3: "RETURN",
-    0xf4: "DELEGATECALL",
-    0xfd: "REVERT",
-    0xfe: "INVALID",
-    0xff: "SUICIDE"
+    0x9A: "SWAP11",
+    0x9B: "SWAP12",
+    0x9C: "SWAP13",
+    0x9D: "SWAP14",
+    0x9E: "SWAP15",
+    0x9F: "SWAP16",
+    0xA0: "LOG0",
+    0xA1: "LOG1",
+    0xA2: "LOG2",
+    0xA3: "LOG3",
+    0xA4: "LOG4",
+    0xF0: "CREATE",
+    0xF1: "CALL",
+    0xF2: "CALLCODE",
+    0xF3: "RETURN",
+    0xF4: "DELEGATECALL",
+    0xFD: "REVERT",
+    0xFE: "INVALID",
+    0xFF: "SUICIDE",
 }
 
 actions = {
@@ -148,7 +139,6 @@ actions = {
     "INTRET": (0, 0),  # this is fake
     "ASSERT": (1, 0),  # this is fake
     # multiple INTCALL will be added, all fake
-
     "STOP": (0, 0),
     "ADD": (2, 1),
     "MUL": (2, 1),
@@ -204,7 +194,6 @@ actions = {
     "MSIZE": (0, 1),
     "GAS": (0, 1),
     "JUMPDEST": (0, 0),
-
     "PUSH1": (0, 1, 1),
     "PUSH2": (0, 1, 2),
     "PUSH3": (0, 1, 3),
@@ -237,7 +226,6 @@ actions = {
     "PUSH30": (0, 1, 30),
     "PUSH31": (0, 1, 31),
     "PUSH32": (0, 1, 32),
-
     "DUP1": (1, 2),
     "DUP2": (2, 3),
     "DUP3": (3, 4),
@@ -254,7 +242,6 @@ actions = {
     "DUP14": (14, 15),
     "DUP15": (15, 16),
     "DUP16": (16, 17),
-
     "SWAP1": (2, 2),
     "SWAP2": (3, 3),
     "SWAP3": (4, 4),
@@ -271,7 +258,6 @@ actions = {
     "SWAP14": (15, 15),
     "SWAP15": (16, 16),
     "SWAP16": (17, 17),
-
     "LOG0": (2, 0),
     "LOG1": (3, 0),
     "LOG2": (4, 0),
@@ -282,10 +268,9 @@ actions = {
     "CALLCODE": (7, 1),
     "RETURN": (2, 0),
     "DELEGATECALL": (6, 1),
-
     "REVERT": (2, 0),
     "INVALID": (0, 0),
-    "SUICIDE": (1, 0)
+    "SUICIDE": (1, 0),
 }
 
 push_ops = {
@@ -320,7 +305,7 @@ push_ops = {
     "PUSH29",
     "PUSH30",
     "PUSH31",
-    "PUSH32"
+    "PUSH32",
 }
 
 dup_ops = {
@@ -339,7 +324,7 @@ dup_ops = {
     "DUP13",
     "DUP14",
     "DUP15",
-    "DUP16"
+    "DUP16",
 }
 
 swap_ops = {
@@ -358,29 +343,14 @@ swap_ops = {
     "SWAP13",
     "SWAP14",
     "SWAP15",
-    "SWAP16"
+    "SWAP16",
 }
 
-log_ops = {
-    "LOG0",
-    "LOG1",
-    "LOG2",
-    "LOG3",
-    "LOG4"
-}
+log_ops = {"LOG0", "LOG1", "LOG2", "LOG3", "LOG4"}
 
-exit_ops = {
-    "RETURN",
-    "INVALID",
-    "STOP",
-    "SUICIDE",
-    "REVERT"
-}
+exit_ops = {"RETURN", "INVALID", "STOP", "SUICIDE", "REVERT"}
 
-jump_ops = {
-    "JUMP",
-    "JUMPI"
-}
+jump_ops = {"JUMP", "JUMPI"}
 
 bin_ops = {
     "SUB": "-",
@@ -417,14 +387,10 @@ special_ops = {
     "ORIGIN": "tx.origin",
     "GAS": "msg.gas",
     "NUMBER": "block.number",
-    "NOP": "pass"
+    "NOP": "pass",
 }
 
-call_ops = {
-    "CALL",
-    "CALLCODE",
-    "DELEGATECALL"
-}
+call_ops = {"CALL", "CALLCODE", "DELEGATECALL"}
 
 mem_write_ops = {
     "CALLDATACOPY",
@@ -434,43 +400,31 @@ mem_write_ops = {
     "MSTORE8",
 } | call_ops
 
-mem_read_ops = {
-    "MLOAD",
-    "SHA3",
-    "CREATE",
-    "RETURN"
-} | log_ops | call_ops
+mem_read_ops = {"MLOAD", "SHA3", "CREATE", "RETURN"} | log_ops | call_ops
 
-order_ops = {
-    "GAS",
-    "BALANCE",
-    "MSIZE"
-}
+order_ops = {"GAS", "BALANCE", "MSIZE"}
 
-negate_ops = {
-    "GT": "LEQ",
-    "LT": "GEQ",
-    "EQ": "NEQ"
-}
+negate_ops = {"GT": "LEQ", "LT": "GEQ", "EQ": "NEQ"}
 
 fake_ops = {
     "LEQ": "<=",  # fake
     "GEQ": ">=",  # fake
     "NEQ": "!=",  # fake
-
     "SL": "<<",  # fake
     "SR": ">>",  # fake
 }
 
-free_ops = set(opcodes.values()) \
-    - push_ops \
-    - mem_read_ops \
-    - mem_write_ops \
-    - {"SSTORE", "SLOAD"} \
-    - dup_ops \
-    - swap_ops \
-    - exit_ops \
+free_ops = (
+    set(opcodes.values())
+    - push_ops
+    - mem_read_ops
+    - mem_write_ops
+    - {"SSTORE", "SLOAD"}
+    - dup_ops
+    - swap_ops
+    - exit_ops
     - jump_ops
+)
 
 # these operations capture the result of an execution
 # SSTORE is handled elsewhere
@@ -478,14 +432,13 @@ free_ops = set(opcodes.values()) \
 effect_ops = call_ops | log_ops | {"CREATE", "RETURN"}
 
 # if there is no more access its
-throw_away_ops = set(bin_ops.keys()
-                     + mono_ops.keys()
-                     + ["MOVE", "NOP", "PASS"]
-                     + special_ops.keys())
+throw_away_ops = set(
+    bin_ops.keys() + mono_ops.keys() + ["MOVE", "NOP", "PASS"] + special_ops.keys()
+)
 
 INTERNAL_RETURN_OPCODE = "INTRET"
 
 INTERNAL_CALL_OPCODE = "INTCALL"
 
-ADDRESS_MASK = 0xffffffffffffffffffffffffffffffffffffffff
-WORD_MASK = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+ADDRESS_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+WORD_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF

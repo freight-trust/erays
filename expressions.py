@@ -69,14 +69,20 @@ class Expression(object):
 
     def invalidates(self, other):
         self_writes = self.get_write_registers()
-        if len(self_writes & other.get_write_registers()) != 0 \
-                or len(self_writes & other.get_read_registers()) != 0:
+        if (
+            len(self_writes & other.get_write_registers()) != 0
+            or len(self_writes & other.get_read_registers()) != 0
+        ):
             return True
         # if other.opcode in and self.opcode in mem_write_ops:
         # 	return True
-        if other.contains_operations({"SLOAD"}) and self.contains_operations({"SSTORE"}):
+        if other.contains_operations({"SLOAD"}) and self.contains_operations(
+            {"SSTORE"}
+        ):
             return True
-        if other.contains_operations(mem_read_ops) and self.contains_operations(mem_write_ops):
+        if other.contains_operations(mem_read_ops) and self.contains_operations(
+            mem_write_ops
+        ):
             return True
 
         return False
@@ -161,8 +167,16 @@ class BinOpExpression(Expression):
     def format_dependencies(self, suppress):
         operator = bin_ops[self.opcode]
         if suppress:
-            return "%s %s %s" % (self.format_dependency(0, False), operator, self.format_dependency(1, False))
-        return "(%s %s %s)" % (self.format_dependency(0, False), operator, self.format_dependency(1, False))
+            return "%s %s %s" % (
+                self.format_dependency(0, False),
+                operator,
+                self.format_dependency(1, False),
+            )
+        return "(%s %s %s)" % (
+            self.format_dependency(0, False),
+            operator,
+            self.format_dependency(1, False),
+        )
 
 
 class JumpExpression(Expression):
@@ -170,18 +184,15 @@ class JumpExpression(Expression):
         return "goto %s" % self.format_dependency(0)
 
 
-inverted = {
-    "LT": ">=",
-    "LEQ": ">",
-    "GT": "<=",
-    "GEQ": "<",
-    "NEQ": "=="
-}
+inverted = {"LT": ">=", "LEQ": ">", "GT": "<=", "GEQ": "<", "NEQ": "=="}
 
 
 class JumpIExpression(Expression):
     def __str__(self):
-        return "if (%s) goto %s" % (self.format_dependency(1), self.format_dependency(0))
+        return "if (%s) goto %s" % (
+            self.format_dependency(1),
+            self.format_dependency(0),
+        )
 
     def get_inverted_condition(self):
         if 1 in self.dependencies:
@@ -191,8 +202,11 @@ class JumpIExpression(Expression):
                 return "if (%s)" % dependency.format_dependency(0)
             if opcode in inverted:
                 operator = inverted[opcode]
-                return "if (%s %s %s)" % (dependency.format_dependency(0), operator,
-                                          dependency.format_dependency(1))
+                return "if (%s %s %s)" % (
+                    dependency.format_dependency(0),
+                    operator,
+                    dependency.format_dependency(1),
+                )
                 # print(opcode)
         return "if (! %s)" % self.format_dependency(1)
 
@@ -244,5 +258,13 @@ class FakeExpression(Expression):
     def format_dependencies(self, suppress):
         operator = fake_ops[self.opcode]
         if suppress:
-            return "%s %s %s" % (self.format_dependency(0, False), operator, self.format_dependency(1, False))
-        return "(%s %s %s)" % (self.format_dependency(0, False), operator, self.format_dependency(1, False))
+            return "%s %s %s" % (
+                self.format_dependency(0, False),
+                operator,
+                self.format_dependency(1, False),
+            )
+        return "(%s %s %s)" % (
+            self.format_dependency(0, False),
+            operator,
+            self.format_dependency(1, False),
+        )
