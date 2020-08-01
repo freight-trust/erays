@@ -1,8 +1,8 @@
+import os
+
+from expressionblock import ExpressionBlock
 from instructions import to_stack_registers
 from opcodes import INTERNAL_CALL_OPCODE
-from expressionblock import ExpressionBlock
-
-import os
 
 
 def get_prefix(depth):

@@ -1,5 +1,4 @@
-from ceptions import ValidationError
-from ceptions import PoisonException
+from ceptions import PoisonException, ValidationError
 from opcodes import order_ops
 
 READ_POISON = ("READ", -1)

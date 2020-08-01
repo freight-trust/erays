@@ -1,5 +1,5 @@
-import sys
 import json
+import sys
 
 line = open(sys.argv[1]).readline()
 info = json.loads(line)

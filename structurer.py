@@ -1,7 +1,7 @@
+import sys
+
 from aggregator import Aggregator
 from structures import *
-
-import sys
 
 
 class Structurer(Aggregator):

@@ -1,16 +1,14 @@
-from opcodes import *
-from bytecodes import *
-from instructions import *
-
-from graphbuilder import GraphBuilder
-from interpreter import BasicInterpreter
-from interpreter import DuplicateInterpreter
-from structures import InternalFunction
-from ceptions import StackSizeError
-from instructionblock import InstructionBlock
-
-from collections import defaultdict
 import sys
+from collections import defaultdict
+
+from bytecodes import *
+from ceptions import StackSizeError
+from graphbuilder import GraphBuilder
+from instructionblock import InstructionBlock
+from instructions import *
+from interpreter import BasicInterpreter, DuplicateInterpreter
+from opcodes import *
+from structures import InternalFunction
 
 
 class Lifter(GraphBuilder):

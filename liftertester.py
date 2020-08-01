@@ -1,10 +1,10 @@
-from instructionexecutor import InstructionExecutor
-from lifter import Lifter
-from tracereader import TraceReader, EffectReader
-from ceptions import TimeoutException
-
 import signal
 import sys
+
+from ceptions import TimeoutException
+from instructionexecutor import InstructionExecutor
+from lifter import Lifter
+from tracereader import EffectReader, TraceReader
 
 
 def handler(signum, frame):

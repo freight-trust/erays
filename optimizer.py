@@ -1,15 +1,12 @@
-from structures import InternalFunction
-from lifter import Lifter
-from blockstate import ConstantState
-from blockstate import CopyState
-from blockstate import MemState
-
-from opcodes import *
-from baseexecutor import execute_binop, execute_monop
-from instructions import MoveInstruction, Instruction
-
-import sys
 import math
+import sys
+
+from baseexecutor import execute_binop, execute_monop
+from blockstate import ConstantState, CopyState, MemState
+from instructions import Instruction, MoveInstruction
+from lifter import Lifter
+from opcodes import *
+from structures import InternalFunction
 
 
 def apply_peephole_optimizations(func):

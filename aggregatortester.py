@@ -1,10 +1,10 @@
-from expressionexecutor import ExpressionExecutor
-from aggregator import Aggregator
-from tracereader import EffectReader
-from ceptions import TimeoutException
-
 import signal
 import sys
+
+from aggregator import Aggregator
+from ceptions import TimeoutException
+from expressionexecutor import ExpressionExecutor
+from tracereader import EffectReader
 
 
 def handler(signum, frame):

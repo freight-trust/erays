@@ -1,10 +1,11 @@
+import sys
+
 from blockstate import ExpressionState
-from optimizer import Optimizer
 from expressionblock import ExpressionBlock
 from expressions import *
 from instructions import *
 from opcodes import special_ops
-import sys
+from optimizer import Optimizer
 
 
 def get_single_usage(begin, expressions, live):

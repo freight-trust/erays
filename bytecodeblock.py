@@ -1,11 +1,11 @@
-from ceptions import InternalFunctionError
-from bytecodes import *
-from opcodes import INTERNAL_RETURN_OPCODE, exit_ops
-
 import array
 import hashlib
 import operator
 from copy import deepcopy
+
+from bytecodes import *
+from ceptions import InternalFunctionError
+from opcodes import INTERNAL_RETURN_OPCODE, exit_ops
 
 
 class BytecodeBlock(object):

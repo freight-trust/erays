@@ -1,11 +1,10 @@
-from opcodes import *
-from ceptions import TraceError, TraceException, ValidationError, InputError
-from contextops import ContextOps, FreeOps, READ_POISON, EffectOps
-
-from graphbuilder import FALLBACK_SIGNATURE
-
-import sys
 import json
+import sys
+
+from ceptions import InputError, TraceError, TraceException, ValidationError
+from contextops import READ_POISON, ContextOps, EffectOps, FreeOps
+from graphbuilder import FALLBACK_SIGNATURE
+from opcodes import *
 
 
 def load_trace(line):

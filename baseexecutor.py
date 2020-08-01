@@ -1,9 +1,10 @@
+from copy import deepcopy
+
 from ceptions import OperationError, PoisonException, ValidationError
 from graphbuilder import FALLBACK_SIGNATURE
 from instructions import *
 from memorymodel import MemoryModel
 from opcodes import *
-from copy import deepcopy
 
 WORD_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 INTRETURN_ADDRESS = -2

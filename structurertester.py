@@ -1,10 +1,10 @@
-from structurer import Structurer
-from structureexecutor import StructureExecutor
-from tracereader import EffectReader
-from ceptions import TimeoutException
-
 import signal
 import sys
+
+from ceptions import TimeoutException
+from structureexecutor import StructureExecutor
+from structurer import Structurer
+from tracereader import EffectReader
 
 
 def handler(signum, frame):

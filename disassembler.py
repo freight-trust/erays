@@ -1,11 +1,11 @@
+import re
+import sys
+from itertools import groupby
+
 from bytecodeblock import *
+from bytecodes import *
 from ceptions import *
 from opcodes import *
-from bytecodes import *
-
-from itertools import groupby
-import sys
-import re
 
 
 class Disassembler(object):

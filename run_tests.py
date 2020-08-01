@@ -1,15 +1,14 @@
 from __future__ import print_function
 
-from os import walk
-import sys
 import signal
-
+import sys
 from datetime import datetime
-from multiprocessing import Process, Manager, Lock
+from multiprocessing import Lock, Manager, Process
+from os import walk
 
 from aggregatortester import AggregatorTester
-from optimizertester import OptimizerTester
 from liftertester import LifterTester
+from optimizertester import OptimizerTester
 from structurertester import StructurerTester
 
 

@@ -1,7 +1,7 @@
-from bytecodeblock import *
-
 from copy import deepcopy
 from operator import attrgetter
+
+from bytecodeblock import *
 
 DUMMY_BLOCK_ID = -42
 

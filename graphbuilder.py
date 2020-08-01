@@ -1,12 +1,12 @@
+import os
+import sys
+
 from disassembler import Disassembler
-from interpreter import BasicInterpreter
 from image import Image
-from structures import ExternalFunction
+from interpreter import BasicInterpreter
 from opcodes import exit_ops
 from resolver import BasicResolver
-
-import sys
-import os
+from structures import ExternalFunction
 
 FALLBACK_SIGNATURE = 0xFFFFFFFF
 

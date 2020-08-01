@@ -1,7 +1,6 @@
-from opcodes import *
-
 from copy import deepcopy
 
+from opcodes import *
 from opcodes import ADDRESS_MASK
 
 TEMP_REGISTER = "$f"
