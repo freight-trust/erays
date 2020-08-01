@@ -414,17 +414,8 @@ fake_ops = {
     "SR": ">>",  # fake
 }
 
-free_ops = (
-    set(opcodes.values())
-    - push_ops
-    - mem_read_ops
-    - mem_write_ops
-    - {"SSTORE", "SLOAD"}
-    - dup_ops
-    - swap_ops
-    - exit_ops
-    - jump_ops
-)
+free_ops = (set(opcodes.values()) - push_ops - mem_read_ops - mem_write_ops -
+            {"SSTORE", "SLOAD"} - dup_ops - swap_ops - exit_ops - jump_ops)
 
 # these operations capture the result of an execution
 # SSTORE is handled elsewhere
@@ -432,9 +423,8 @@ free_ops = (
 effect_ops = call_ops | log_ops | {"CREATE", "RETURN"}
 
 # if there is no more access its
-throw_away_ops = set(
-    bin_ops.keys() + mono_ops.keys() + ["MOVE", "NOP", "PASS"] + special_ops.keys()
-)
+throw_away_ops = set(bin_ops.keys() + mono_ops.keys() +
+                     ["MOVE", "NOP", "PASS"] + special_ops.keys())
 
 INTERNAL_RETURN_OPCODE = "INTRET"
 

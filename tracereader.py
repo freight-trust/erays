@@ -66,7 +66,7 @@ class TraceReader:
             if opcode in mem_read_ops:  # mem reads/writes are not mutually exclusive
                 self.memory_ops.add_mapping(inputs, output)
             if (
-                opcode in mem_write_ops
+                    opcode in mem_write_ops
             ):  # there will be one in the context, and another as separator
                 self.memory_ops.push_context(inputs)
             if opcode == "SLOAD":
@@ -76,8 +76,8 @@ class TraceReader:
             if "error" in item:
                 self.error = True
 
-        self.memory_ops.add_mapping(READ_POISON, (-1,))
-        self.storage_ops.add_mapping(READ_POISON, (-1,))
+        self.memory_ops.add_mapping(READ_POISON, (-1, ))
+        self.storage_ops.add_mapping(READ_POISON, (-1, ))
 
     # self.__memory_ops.debug_contexts()
 
@@ -189,7 +189,7 @@ class EffectReader(TraceReader):
             if "error" in item:
                 self.error = True
         # self.effect_ops.debug_mapping()
-        self.storage_ops.add_mapping(READ_POISON, (-1,))
+        self.storage_ops.add_mapping(READ_POISON, (-1, ))
 
     def get_memory_bytes(self, index, offset, size):
         memory = self.trace[index]["memory"]
@@ -213,7 +213,8 @@ class EffectReader(TraceReader):
             if opcode == "DELEGATECALL":
                 inputs = (opcode, inputs[1], in_chunk, out_offset, out_size)
             else:
-                inputs = (opcode, inputs[1], inputs[2], in_chunk, out_offset, out_size)
+                inputs = (opcode, inputs[1], inputs[2], in_chunk, out_offset,
+                          out_size)
             self.effect_ops.add_mapping(inputs, output)
         elif opcode == "CREATE":
             offset, size = inputs[2], inputs[3]

@@ -26,7 +26,8 @@ class Interpreter(object):
             try:
                 image.interpret_bytecode(bytecode)
             except KeyError:
-                raise DependencyError("cannot resolve byte code read dependency")
+                raise DependencyError(
+                    "cannot resolve byte code read dependency")
         return image
 
 
@@ -76,8 +77,7 @@ class BasicInterpreter(Interpreter):
         cur_id = cur_block.get_id()
         try:
             suc_id, push_id, jump_address = self.resolver.resolve_jump_target(
-                exit_instruction
-            )
+                exit_instruction)
         except JumpAddressError:
             return
         suc_block = self.basic_blocks[suc_id]
@@ -102,7 +102,8 @@ class BasicInterpreter(Interpreter):
         self.__graph.add_block(suc_block)
         self.__graph.add_edge(cur_block.get_id(), suc_id)
         # print(type(suc_id))
-        self.__create_execution_path(suc_id, tracker, path + [cur_block.get_id()])
+        self.__create_execution_path(suc_id, tracker,
+                                     path + [cur_block.get_id()])
 
     def get_end_path(self):
         return self.__end_paths[0]
@@ -156,9 +157,8 @@ class DuplicateInterpreter(Interpreter):
         opcode = exit_instruction.opcode
 
         if opcode in jump_ops:
-            self.__create_jump_execution_path(
-                pre_image.block_id, cur_block, image, path
-            )
+            self.__create_jump_execution_path(pre_image.block_id, cur_block,
+                                              image, path)
 
         if opcode not in exit_ops and opcode != "JUMP":
             self.__create_natural_execution_path(cur_block, cpy_image, path)
@@ -167,7 +167,8 @@ class DuplicateInterpreter(Interpreter):
         exit_instruction = cur_block.get_exit_bytecode()
         cur_id = cur_block.get_id()
         try:
-            suc_id = self.resolver.resolve_jump_target(exit_instruction, image.top)
+            suc_id = self.resolver.resolve_jump_target(exit_instruction,
+                                                       image.top)
         except JumpAddressError:
             return
 
@@ -184,10 +185,12 @@ class DuplicateInterpreter(Interpreter):
         self.__create_execution_path(suc_id, image, path + [cur_id])
 
     def __create_natural_execution_path(self, cur_block, image, path):
-        suc_id = self.resolver.resolve_natural_successor(cur_block.get_id(), image.top)
+        suc_id = self.resolver.resolve_natural_successor(
+            cur_block.get_id(), image.top)
         if not suc_id:
             return
         suc_block = self.basic_blocks[suc_id]
         self.__graph.add_block(suc_block)
         self.__graph.add_edge(cur_block.get_id(), suc_id)
-        self.__create_execution_path(suc_id, image, path + [cur_block.get_id()])
+        self.__create_execution_path(suc_id, image,
+                                     path + [cur_block.get_id()])

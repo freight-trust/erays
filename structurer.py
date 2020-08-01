@@ -35,10 +35,8 @@ class Structurer(Aggregator):
         indirect_jumps = set()
         for block in graph:
             block_id = block.get_id()
-            if (
-                block.check_exit_expression("JUMP")
-                and len(graph.get_successor_ids(block)) > 1
-            ):
+            if (block.check_exit_expression("JUMP")
+                    and len(graph.get_successor_ids(block)) > 1):
                 indirect_jumps.add(block_id)
         return len(indirect_jumps) != 0
 
@@ -91,7 +89,8 @@ class Structurer(Aggregator):
             return a0
 
         new_id = graph.allocate_id()
-        block = IfThen(new_id, graph[a2].get_entry_address(), graph[a0], graph[a1])
+        block = IfThen(new_id, graph[a2].get_entry_address(), graph[a0],
+                       graph[a1])
         graph.add_block(block)
         graph.transfer_predecessors(a0, new_id)
         graph.remove_blocks({a0, a1})
@@ -104,14 +103,16 @@ class Structurer(Aggregator):
             return a0
         a1 = graph.get_natural_successor(a0)
         a2 = (suc_ids - {a1}).pop()
-        if graph.get_single_predecessor(a1) != graph.get_single_predecessor(a2):
+        if graph.get_single_predecessor(a1) != graph.get_single_predecessor(
+                a2):
             return a0
         a3 = graph.get_single_successor(a1)
         if a3 is None or a3 != graph.get_single_successor(a2):
             return a0
         suc_address = graph[a3].get_entry_address()
         new_id = graph.allocate_id()
-        block = IfThenElse(new_id, suc_address, graph[a0], graph[a1], graph[a2])
+        block = IfThenElse(new_id, suc_address, graph[a0], graph[a1],
+                           graph[a2])
         graph.add_block(block)
         graph.transfer_predecessors(a0, new_id)
         graph.add_edge(new_id, a3)
@@ -125,10 +126,8 @@ class Structurer(Aggregator):
         a1, a2 = suc_ids
         if graph.get_single_successor(a2) == a0:
             a1, a2 = a2, a1
-        if (
-            graph.get_single_successor(a1) != a0
-            or graph.get_single_predecessor(a1) != a0
-        ):
+        if (graph.get_single_successor(a1) != a0
+                or graph.get_single_predecessor(a1) != a0):
             return a0
         new_id = graph.allocate_id()
         suc_address = graph[a2].get_entry_address()

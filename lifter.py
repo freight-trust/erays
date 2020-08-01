@@ -43,17 +43,18 @@ class Lifter(GraphBuilder):
                     callee_pair = (suc_ids.pop(), callee_exit)
                     if callee_pair not in self.__callee_pairs:
                         self.__callee_pairs[callee_pair] = set()
-                    self.__callee_pairs[callee_pair].add((caller_begin, caller_end))
+                    self.__callee_pairs[callee_pair].add(
+                        (caller_begin, caller_end))
                 else:
-                    print("[WARNING] caller successor not unique %s" % caller_begin)
+                    print("[WARNING] caller successor not unique %s" %
+                          caller_begin)
 
     def __create_internal_functions(self):
         self.internal_functions = dict()
         for callee_pair, caller_pairs in self.__callee_pairs.items():
             # print(caller_pairs)
             func, caller_pairs = self.__create_internal_function(
-                callee_pair, caller_pairs
-            )
+                callee_pair, caller_pairs)
             if len(caller_pairs) <= 1:
                 del self.__callee_pairs[callee_pair]
             else:
@@ -72,30 +73,29 @@ class Lifter(GraphBuilder):
             caller_begin, caller_end = caller_pair
 
             caller_begin_image = self.tracker.get_observed_image(
-                callee_begin, caller_begin
-            )
-            interpreter = BasicInterpreter(self.graph.get_blocks(), self.resolver)
+                callee_begin, caller_begin)
+            interpreter = BasicInterpreter(self.graph.get_blocks(),
+                                           self.resolver)
             interpreter.add_to_poison(caller_end)
 
             sub_graph, sub_tracker = interpreter.explore_control_flow_graph(
-                callee_begin, caller_begin_image
-            )
+                callee_begin, caller_begin_image)
             sub_graph.remove_block(caller_end)  # this might not be safe
 
             end_path = interpreter.get_end_path()
             operations = interpreter.compute_stack_actions(end_path)
             # print(delta, alpha)
             signature = len(self.internal_functions)
-            in_func = InternalFunction(
-                signature, sub_graph, sub_tracker, callee_pair, operations
-            )
+            in_func = InternalFunction(signature, sub_graph, sub_tracker,
+                                       callee_pair, operations)
 
             block_ids = frozenset(sub_graph.get_block_ids())
             if block_ids not in possible_funcs:
                 possible_funcs[block_ids] = [set(), in_func]
             possible_funcs[block_ids][0].add(caller_pair)
 
-        caller_pairs, func = max(possible_funcs.values(), key=lambda x: len(x[0]))
+        caller_pairs, func = max(possible_funcs.values(),
+                                 key=lambda x: len(x[0]))
 
         return func, caller_pairs
 
@@ -106,14 +106,13 @@ class Lifter(GraphBuilder):
             entry_image = func.tracker.get_observed_image(entry_id)
 
             interpreter = DuplicateInterpreter(
-                func.graph.get_blocks(), self.resolver.get_natural_successors()
-            )
+                func.graph.get_blocks(),
+                self.resolver.get_natural_successors())
             func.resolver = interpreter.resolver
 
             interpreter.add_to_poison(func.exit_id)
             new_graph, new_tracker = interpreter.explore_control_flow_graph(
-                entry_id, entry_image
-            )
+                entry_id, entry_image)
             func.graph, func.tracker = new_graph, new_tracker
             func.ins_outs = interpreter.ins_outs
 
@@ -176,7 +175,8 @@ class Lifter(GraphBuilder):
         entry_addr = block.get_entry_address()
         new_block = InstructionBlock(block.get_id(), entry_addr)
         for bytecode in block:
-            instructions, stack_size = self.__lift_bytecode(bytecode, stack_size)
+            instructions, stack_size = self.__lift_bytecode(
+                bytecode, stack_size)
             for instruction in instructions:
                 new_block.append(instruction)
         new_block.exit_stack_size = stack_size
@@ -190,7 +190,8 @@ class Lifter(GraphBuilder):
         delta, alpha = actions[opcode][:2]
 
         reads = to_stack_registers([stack_size - i - 1 for i in range(delta)])
-        writes = to_stack_registers([stack_size - delta + i for i in range(alpha)])
+        writes = to_stack_registers(
+            [stack_size - delta + i for i in range(alpha)])
         instructions = list()
 
         if opcode in swap_ops:
@@ -207,7 +208,9 @@ class Lifter(GraphBuilder):
             instructions = [MoveInstruction("MOVE", reads, writes, address)]
         elif opcode in push_ops:
             constant = bytecode.dependencies[0]
-            instructions = [MoveInstruction("MOVE", [constant], writes, address)]
+            instructions = [
+                MoveInstruction("MOVE", [constant], writes, address)
+            ]
         elif opcode in bin_ops:
             instructions = [BinOpInstruction(opcode, reads, writes, address)]
         elif opcode in mono_ops:
@@ -217,7 +220,9 @@ class Lifter(GraphBuilder):
         elif opcode == "MLOAD":
             instructions = [MloadInstruction(opcode, reads, writes, address)]
         elif opcode == "CALLDATALOAD":
-            instructions = [CallLoadInstruction(opcode, reads, writes, address)]
+            instructions = [
+                CallLoadInstruction(opcode, reads, writes, address)
+            ]
         elif opcode.startswith("INTCALL"):
             instructions = [IntCallInstruction(opcode, reads, writes, address)]
         elif opcode == "SSTORE":
@@ -231,8 +236,7 @@ class Lifter(GraphBuilder):
 
     def get_all_functions(self):
         return list(self.external_functions.values()) + list(
-            self.internal_functions.values()
-        )
+            self.internal_functions.values())
 
     def debug_callee_pairs(self):
         for callee_pair, caller_pairs in self.__callee_pairs.items():

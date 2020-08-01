@@ -184,8 +184,7 @@ class InternalFunction(ExternalFunction):
         self.reads = to_stack_registers(range(entry_size - alpha, entry_size))
         self.reads.reverse()
         self.writes = to_stack_registers(
-            range(entry_size - alpha, entry_size - alpha + delta)
-        )
+            range(entry_size - alpha, entry_size - alpha + delta))
         self.writes.reverse()
         return
 

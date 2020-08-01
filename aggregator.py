@@ -34,7 +34,7 @@ def get_single_usage(begin, expressions, live):
 
 def is_valid_at(expressions, begin, end):
     target_expression = expressions[begin]
-    for expression in expressions[begin + 1 : end]:
+    for expression in expressions[begin + 1:end]:
         if expression.invalidates(target_expression):
             return False
     return True
@@ -48,7 +48,8 @@ class Aggregator(Optimizer):
 
     def __convert_function(self, func):
         for block in func.graph:
-            new_block = ExpressionBlock(block.get_id(), block.get_entry_address())
+            new_block = ExpressionBlock(block.get_id(),
+                                        block.get_entry_address())
             new_block.exit_stack_size = block.exit_stack_size
             for instruction in block:
                 expression = self.__convert_instruction(instruction)

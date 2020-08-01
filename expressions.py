@@ -68,20 +68,16 @@ class Expression(object):
 
     def invalidates(self, other):
         self_writes = self.get_write_registers()
-        if (
-            len(self_writes & other.get_write_registers()) != 0
-            or len(self_writes & other.get_read_registers()) != 0
-        ):
+        if (len(self_writes & other.get_write_registers()) != 0
+                or len(self_writes & other.get_read_registers()) != 0):
             return True
         # if other.opcode in and self.opcode in mem_write_ops:
         # 	return True
         if other.contains_operations({"SLOAD"}) and self.contains_operations(
-            {"SSTORE"}
-        ):
+            {"SSTORE"}):
             return True
-        if other.contains_operations(mem_read_ops) and self.contains_operations(
-            mem_write_ops
-        ):
+        if other.contains_operations(
+                mem_read_ops) and self.contains_operations(mem_write_ops):
             return True
 
         return False
@@ -215,12 +211,14 @@ class JumpIExpression(Expression):
 
 class MstoreExpression(Expression):
     def __str__(self):
-        return "M[%s] = %s" % (self.format_dependency(0), self.format_dependency(1))
+        return "M[%s] = %s" % (self.format_dependency(0),
+                               self.format_dependency(1))
 
 
 class SstoreExpression(Expression):
     def __str__(self):
-        return "S[%s] = %s" % (self.format_dependency(0), self.format_dependency(1))
+        return "S[%s] = %s" % (self.format_dependency(0),
+                               self.format_dependency(1))
 
 
 class SloadExpression(Expression):

@@ -95,10 +95,8 @@ class Image(object):
             return False
         for i in range(self.top):
             # try:
-            if (
-                isinstance(self.stack[i], PushByteCode)
-                and self.stack[i] != other.stack[i]
-            ):
+            if (isinstance(self.stack[i], PushByteCode)
+                    and self.stack[i] != other.stack[i]):
                 return False
             # except KeyError:
             # 	raise DependencyError

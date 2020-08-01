@@ -16,7 +16,7 @@ def execute_binop(inputs):
     opcode = inputs[0]
     arg_0, arg_1 = inputs[1], inputs[2]
     if opcode == "EXP":
-        return (arg_0 ** arg_1) & WORD_MASK
+        return (arg_0**arg_1) & WORD_MASK
     elif opcode == "SUB":
         return (arg_0 - arg_1) & WORD_MASK
     elif opcode == "AND":
@@ -42,7 +42,7 @@ def execute_binop(inputs):
     elif opcode == "BYTE":
         arg_1 = ("%x" % arg_1).zfill(64)
         # TODO: idk if this is right
-        return int(arg_1[arg_0 : arg_0 + 2], 16)
+        return int(arg_1[arg_0:arg_0 + 2], 16)
     elif opcode == "LEQ":
         return arg_0 <= arg_1
     elif opcode == "GEQ":
@@ -227,7 +227,8 @@ class BaseExecutor:
             if opcode == "DELEGATECALL":
                 inputs = (opcode, inputs[1], chunk, out_offset, out_size)
             else:
-                inputs = (opcode, inputs[1], inputs[2], chunk, out_offset, out_size)
+                inputs = (opcode, inputs[1], inputs[2], chunk, out_offset,
+                          out_size)
             # print(inputs)
             output = self.reader.do_effect_ops(inputs)
             self.memory.store(out_offset, out_size, output[1])

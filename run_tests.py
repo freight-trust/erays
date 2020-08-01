@@ -70,9 +70,8 @@ def output_exception_report(path, exceptions, total):
     exception_report.write("=" * 20 + "\n")
 
     for count, (ex, code_size) in exceptions.items():
-        exception_report.write(
-            "%s : %d [%s] %s\n" % (count, code_size, type(ex).__name__, str(ex))
-        )
+        exception_report.write("%s : %d [%s] %s\n" %
+                               (count, code_size, type(ex).__name__, str(ex)))
     exception_report.close()
 
 
@@ -108,5 +107,6 @@ if __name__ == "__main__":
 
     [process.join() for process in processes]
     print("processes joined")
-    file_path = "reports/" + tester.__name__ + datetime.now().strftime("_%m-%d-%H-%M")
+    file_path = "reports/" + tester.__name__ + datetime.now().strftime(
+        "_%m-%d-%H-%M")
     output_exception_report(file_path, exceptions, total.value)

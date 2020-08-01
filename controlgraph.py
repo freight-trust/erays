@@ -104,7 +104,8 @@ class ControlGraph(object):
             pass
 
     def has_edge(self, src_id, dst_id):
-        return src_id in self.outgoing_edges and dst_id in self.outgoing_edges[src_id]
+        return src_id in self.outgoing_edges and dst_id in self.outgoing_edges[
+            src_id]
 
     def get_single_predecessor(self, block_id):
         pre_ids = self.get_predecessor_ids(block_id)
@@ -155,8 +156,7 @@ class ControlGraph(object):
         cur_block = self[block_id]
         ext_addr = cur_block.get_exit_address()
         natural = min(
-            suc_ids, key=lambda x: abs(self[x].get_entry_address() - ext_addr)
-        )
+            suc_ids, key=lambda x: abs(self[x].get_entry_address() - ext_addr))
         return natural
 
     def get_predecessor_ids(self, block_id):
@@ -228,8 +228,7 @@ class ControlGraph(object):
                 intersection_ids = deepcopy(block_ids)
                 for block_id_2 in predecessor_ids:
                     intersection_ids = intersection_ids.intersection(
-                        self.dominators[block_id_2]
-                    )
+                        self.dominators[block_id_2])
                 intersection_ids.add(block_id_1)
                 if self.dominators[block_id_1] != intersection_ids:
                     changed = True
@@ -281,7 +280,8 @@ class ControlGraph(object):
                 break
         if not imm_dominator:
             return
-        strict_dominators = set(self.dominators[imm_dominator]) - {imm_dominator}
+        strict_dominators = set(
+            self.dominators[imm_dominator]) - {imm_dominator}
         for s in strict_dominators:
             assert self.dominates_over(s, cur_id)
         return imm_dominator
@@ -314,8 +314,7 @@ class ControlGraph(object):
                 intersection_ids = deepcopy(block_ids)
                 for block_id_2 in predecessor_ids:
                     intersection_ids = intersection_ids.intersection(
-                        self.post_dominators[block_id_2]
-                    )
+                        self.post_dominators[block_id_2])
                 intersection_ids.add(block_id_1)
                 if self.post_dominators[block_id_1] != intersection_ids:
                     changed = True
@@ -518,7 +517,8 @@ class ControlGraph(object):
                 merged[suc_id] = block_id
 
                 if resolver is not None:
-                    nas = resolver.get_natural_successor(suc_id)  # don't care if none
+                    nas = resolver.get_natural_successor(
+                        suc_id)  # don't care if none
                     resolver.set_natural_successor(block_id, nas)
             change = len(removed) != 0
         return merged

@@ -86,12 +86,14 @@ class MoveInstruction(Instruction):
 
 class MonoOpInstruction(Instruction):
     def __str__(self):
-        return "%s\t%s, %s" % (self.opcode, self.writes[0], self.reads_to_string())
+        return "%s\t%s, %s" % (self.opcode, self.writes[0],
+                               self.reads_to_string())
 
 
 class BinOpInstruction(Instruction):
     def __str__(self):
-        return "%s\t%s, %s" % (self.opcode, self.writes[0], self.reads_to_string())
+        return "%s\t%s, %s" % (self.opcode, self.writes[0],
+                               self.reads_to_string())
 
 
 class MloadInstruction(Instruction):
@@ -101,7 +103,8 @@ class MloadInstruction(Instruction):
 
 class MstoreInstruction(Instruction):
     def __str__(self):
-        return "MSTORE\t%s, [%s]" % (self.read_to_string(1), self.read_to_string(0))
+        return "MSTORE\t%s, [%s]" % (self.read_to_string(1),
+                                     self.read_to_string(0))
 
 
 class SloadInstruction(Instruction):
@@ -111,7 +114,8 @@ class SloadInstruction(Instruction):
 
 class SstoreInstruction(Instruction):
     def __str__(self):
-        return "SSTORE\t%s, [%s]" % (self.read_to_string(1), self.read_to_string(0))
+        return "SSTORE\t%s, [%s]" % (self.read_to_string(1),
+                                     self.read_to_string(0))
 
 
 class CallLoadInstruction(Instruction):
@@ -136,7 +140,6 @@ class NopInstruction(Instruction):
 # class SHA3Operation(Instruction):
 # 	def __init__(self, reads, writes, address):
 # 		Instruction.__init__(self, "SHA3R", reads, writes, address)
-
 
 # class AssertOperation(Instruction):
 # 	def __init__(self, reads, writes, address):
