@@ -75,7 +75,9 @@ class BasicInterpreter(Interpreter):
         exit_instruction = cur_block.get_exit_bytecode()
         cur_id = cur_block.get_id()
         try:
-            suc_id, push_id, jump_address = self.resolver.resolve_jump_target(exit_instruction)
+            suc_id, push_id, jump_address = self.resolver.resolve_jump_target(
+                exit_instruction
+            )
         except JumpAddressError:
             return
         suc_block = self.basic_blocks[suc_id]
@@ -154,7 +156,9 @@ class DuplicateInterpreter(Interpreter):
         opcode = exit_instruction.opcode
 
         if opcode in jump_ops:
-            self.__create_jump_execution_path(pre_image.block_id, cur_block, image, path)
+            self.__create_jump_execution_path(
+                pre_image.block_id, cur_block, image, path
+            )
 
         if opcode not in exit_ops and opcode != "JUMP":
             self.__create_natural_execution_path(cur_block, cpy_image, path)

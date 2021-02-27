@@ -14,8 +14,7 @@ class ExpressionExecutor(BaseExecutor):
                 dependency = expression.get_dependency(i)
                 if dependency is not None:
                     sub_inputs = self.load_inputs(dependency, depth + 1)
-                    sub_output = \
-                        self.execute_opcode(dependency.opcode, sub_inputs)
+                    sub_output = self.execute_opcode(dependency.opcode, sub_inputs)
                     inputs.append(sub_output)
                 else:
                     inputs.append(self.registers[read])

@@ -2,7 +2,7 @@ from ceptions import ValidationError
 from ceptions import PoisonException
 from opcodes import order_ops
 
-READ_POISON = ('READ', -1)
+READ_POISON = ("READ", -1)
 
 
 class ContextOps:

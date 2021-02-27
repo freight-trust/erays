@@ -46,16 +46,16 @@ class ControlGraph(object):
 
     def remove_block(self, block_id):
         if block_id in self.basic_blocks:
-            del (self.basic_blocks[block_id])
+            del self.basic_blocks[block_id]
         if block_id in self.dominators:
-            del (self.dominators[block_id])
+            del self.dominators[block_id]
         if block_id in self.post_dominators:
-            del (self.post_dominators[block_id])
+            del self.post_dominators[block_id]
 
         successor_ids = list()
         if block_id in self.outgoing_edges:
             successor_ids = self.outgoing_edges[block_id]
-            del (self.outgoing_edges[block_id])
+            del self.outgoing_edges[block_id]
         for successor_id in successor_ids:
             incoming_paths = self.incoming_edges[successor_id]
             incoming_paths.remove(block_id)
@@ -63,7 +63,7 @@ class ControlGraph(object):
         predecessor_ids = list()
         if block_id in self.incoming_edges:
             predecessor_ids = self.incoming_edges[block_id]
-            del (self.incoming_edges[block_id])
+            del self.incoming_edges[block_id]
         for predecessor_id in predecessor_ids:
             outgoing_paths = self.outgoing_edges[predecessor_id]
             outgoing_paths.remove(block_id)
@@ -82,8 +82,7 @@ class ControlGraph(object):
         return True
 
     def add_edge(self, src_id, dst_id, indirect=False):
-        if src_id not in self.basic_blocks \
-                or dst_id not in self.basic_blocks:
+        if src_id not in self.basic_blocks or dst_id not in self.basic_blocks:
             return
         self.outgoing_edges[src_id].add(dst_id)
         self.incoming_edges[dst_id].add(src_id)
@@ -105,8 +104,7 @@ class ControlGraph(object):
             pass
 
     def has_edge(self, src_id, dst_id):
-        return src_id in self.outgoing_edges \
-               and dst_id in self.outgoing_edges[src_id]
+        return src_id in self.outgoing_edges and dst_id in self.outgoing_edges[src_id]
 
     def get_single_predecessor(self, block_id):
         pre_ids = self.get_predecessor_ids(block_id)
@@ -156,8 +154,9 @@ class ControlGraph(object):
             return None
         cur_block = self[block_id]
         ext_addr = cur_block.get_exit_address()
-        natural = \
-            min(suc_ids, key=lambda x: abs(self[x].get_entry_address() - ext_addr))
+        natural = min(
+            suc_ids, key=lambda x: abs(self[x].get_entry_address() - ext_addr)
+        )
         return natural
 
     def get_predecessor_ids(self, block_id):
@@ -228,7 +227,9 @@ class ControlGraph(object):
                     continue
                 intersection_ids = deepcopy(block_ids)
                 for block_id_2 in predecessor_ids:
-                    intersection_ids = intersection_ids.intersection(self.dominators[block_id_2])
+                    intersection_ids = intersection_ids.intersection(
+                        self.dominators[block_id_2]
+                    )
                 intersection_ids.add(block_id_1)
                 if self.dominators[block_id_1] != intersection_ids:
                     changed = True
@@ -253,7 +254,7 @@ class ControlGraph(object):
             dominance_frontier = set()
             for pre_id in pre_ids:
                 dominance_frontier |= self.get_successor_ids(pre_id)
-            dominance_frontier -= (set(pre_ids) - {cur_id})
+            dominance_frontier -= set(pre_ids) - {cur_id}
             dominance_frontiers[cur_id] = dominance_frontier
         return dominance_frontiers
 
@@ -282,7 +283,7 @@ class ControlGraph(object):
             return
         strict_dominators = set(self.dominators[imm_dominator]) - {imm_dominator}
         for s in strict_dominators:
-            assert (self.dominates_over(s, cur_id))
+            assert self.dominates_over(s, cur_id)
         return imm_dominator
 
     def dominates_over(self, src_id, dst_id):
@@ -312,7 +313,9 @@ class ControlGraph(object):
                     continue
                 intersection_ids = deepcopy(block_ids)
                 for block_id_2 in predecessor_ids:
-                    intersection_ids = intersection_ids.intersection(self.post_dominators[block_id_2])
+                    intersection_ids = intersection_ids.intersection(
+                        self.post_dominators[block_id_2]
+                    )
                 intersection_ids.add(block_id_1)
                 if self.post_dominators[block_id_1] != intersection_ids:
                     changed = True
@@ -457,15 +460,15 @@ class ControlGraph(object):
         return self.__allocate_id
 
     def visualize(self, file_name, interal=None):
-        dot_file = open(file_name, 'w')
-        dot_file.write("digraph {\nnode [shape=rect,fontname=\"Courier\"];\n")
+        dot_file = open(file_name, "w")
+        dot_file.write('digraph {\nnode [shape=rect,fontname="Courier"];\n')
         if interal:
-            dot_file.write("labelloc=\"t\";\nfontname=\"Courier\"\n")
+            dot_file.write('labelloc="t";\nfontname="Courier"\n')
             r, w = interal
             r = "args " + " ".join(r) + "\l"
             w = "rets " + " ".join(w) + "\l"
 
-            dot_file.write("label=\"%s\l%s\";\n" % (r, w))
+            dot_file.write('label="%s\l%s";\n' % (r, w))
 
         for cur_id in self.basic_blocks:
             # if cur_id in self.marked_block_ids:
@@ -473,14 +476,14 @@ class ControlGraph(object):
             # 	dot_file.write("%d [style=filled, fillcolor=%s]\n" % (cur_id, color))
             # else:
             block = self.basic_blocks[cur_id]
-            if block.__class__.__name__ == 'Seq':
+            if block.__class__.__name__ == "Seq":
                 label = block.dot_format_block(0).lower()
             else:
                 label = "\l".join(map(str, block.get_items())) + "\l"
 
             label = "#%s\l--------\l%s" % (block.get_id(), label)
             # print(label.lower())
-            dot_file.write(str(cur_id) + "[label=\"%s\"];\n" % label)
+            dot_file.write(str(cur_id) + '[label="%s"];\n' % label)
             suc_ids = self.get_successor_ids(cur_id)
             for suc_id in suc_ids:
                 if (cur_id, suc_id) not in self.__indirect_jumps:

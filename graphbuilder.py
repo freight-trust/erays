@@ -7,7 +7,7 @@ from resolver import BasicResolver
 
 import sys, os
 
-FALLBACK_SIGNATURE = 0xffffffff
+FALLBACK_SIGNATURE = 0xFFFFFFFF
 
 
 class GraphBuilder(Disassembler):
@@ -38,8 +38,7 @@ class GraphBuilder(Disassembler):
 
     def __build_graph(self, blocks):
         interpreter = BasicInterpreter(blocks, self.resolver)
-        self.graph, self.tracker = \
-            interpreter.explore_control_flow_graph(0, Image(-1))
+        self.graph, self.tracker = interpreter.explore_control_flow_graph(0, Image(-1))
         self.indirect_jumps = interpreter.ambiguous_blocks
 
     # def __simplify_graph(self):
@@ -107,7 +106,9 @@ class GraphBuilder(Disassembler):
 
     def __create_fallback_function(self):
         if len(self.__signature_blocks) == 0:
-            func = ExternalFunction(FALLBACK_SIGNATURE, self.graph, self.tracker, (0, None))
+            func = ExternalFunction(
+                FALLBACK_SIGNATURE, self.graph, self.tracker, (0, None)
+            )
             self.external_functions[FALLBACK_SIGNATURE] = func
         else:
             suc_ids = self.graph.get_successor_ids(0)
@@ -120,7 +121,9 @@ class GraphBuilder(Disassembler):
         if FALLBACK_SIGNATURE not in self.external_functions:
             if not self.graph.has_block(1):
                 self.graph.add_block(self.get_blocks()[1])
-            func = ExternalFunction(FALLBACK_SIGNATURE, self.graph, self.tracker, (1, None))
+            func = ExternalFunction(
+                FALLBACK_SIGNATURE, self.graph, self.tracker, (1, None)
+            )
             self.external_functions[FALLBACK_SIGNATURE] = func
 
     def validate_execution_path(self, program_counters):

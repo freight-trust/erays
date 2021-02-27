@@ -42,8 +42,7 @@ class ExpressionBlock:
             return self
 
     def remove_end_jump(self):
-        if len(self.__expressions) != 0 \
-                and self.__expressions[-1].opcode == "JUMP":
+        if len(self.__expressions) != 0 and self.__expressions[-1].opcode == "JUMP":
             self.__expressions = self.__expressions[:-1]
 
     def debug_block(self, depth=0):

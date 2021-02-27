@@ -35,8 +35,10 @@ class Structurer(Aggregator):
         indirect_jumps = set()
         for block in graph:
             block_id = block.get_id()
-            if block.check_exit_expression("JUMP") \
-                    and len(graph.get_successor_ids(block)) > 1:
+            if (
+                block.check_exit_expression("JUMP")
+                and len(graph.get_successor_ids(block)) > 1
+            ):
                 indirect_jumps.add(block_id)
         return len(indirect_jumps) != 0
 
@@ -123,8 +125,10 @@ class Structurer(Aggregator):
         a1, a2 = suc_ids
         if graph.get_single_successor(a2) == a0:
             a1, a2 = a2, a1
-        if graph.get_single_successor(a1) != a0 \
-                or graph.get_single_predecessor(a1) != a0:
+        if (
+            graph.get_single_successor(a1) != a0
+            or graph.get_single_predecessor(a1) != a0
+        ):
             return a0
         new_id = graph.allocate_id()
         suc_address = graph[a2].get_entry_address()

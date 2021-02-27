@@ -33,7 +33,7 @@ def get_single_usage(begin, expressions, live):
 
 def is_valid_at(expressions, begin, end):
     target_expression = expressions[begin]
-    for expression in expressions[begin + 1:end]:
+    for expression in expressions[begin + 1 : end]:
         if expression.invalidates(target_expression):
             return False
     return True
@@ -123,8 +123,7 @@ class Aggregator(Optimizer):
         for i, expression in enumerate(expressions):
             writes = expression.get_write_registers()
             opcode = expression.opcode
-            if "INTCALL" in opcode or \
-                            len(writes) != 1:
+            if "INTCALL" in opcode or len(writes) != 1:
                 continue
 
             j = get_single_usage(i, expressions, live)
@@ -151,8 +150,7 @@ class Aggregator(Optimizer):
             writes = expression.get_write_registers()
             reads = expression.get_read_registers()
             opcode = expression.opcode
-            if len(writes & out) == 0 and \
-                            opcode in throw_away_ops | {"SLOAD"}:
+            if len(writes & out) == 0 and opcode in throw_away_ops | {"SLOAD"}:
                 change = True
                 continue
             else:

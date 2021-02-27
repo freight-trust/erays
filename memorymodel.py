@@ -28,6 +28,6 @@ class MemoryModel:
 
     def debug_memory(self):
         arr = str(self.__array)
-        arr = [arr[i:i + 64] for i in range(0, len(arr), 64)]
+        arr = [arr[i : i + 64] for i in range(0, len(arr), 64)]
         for i in arr:
             print(i)
