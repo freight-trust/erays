@@ -1,4 +1,4 @@
-from ceptions import MemoryException
+from .ceptions import MemoryException
 
 ARRAY_SIZE_MAGIC = 1024  # enough for most cases
 ZERO_WORD = "0000000000000000000000000000000000000000000000000000000000000000"

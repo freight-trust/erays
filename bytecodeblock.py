@@ -1,6 +1,6 @@
-from ceptions import InternalFunctionError
-from bytecodes import *
-from opcodes import INTERNAL_RETURN_OPCODE, exit_ops
+from .ceptions import InternalFunctionError
+from .bytecodes import *
+from .opcodes import INTERNAL_RETURN_OPCODE, exit_ops
 
 import array, hashlib
 import operator
@@ -192,7 +192,7 @@ class BytecodeBlock(object):
         return other
 
     def debug_block(self, depth=0):
-        print("\nblock_%d" % self.get_id())
+        print(("\nblock_%d" % self.get_id()))
         for bytecode in self:
             print(bytecode)
 

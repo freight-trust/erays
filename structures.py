@@ -1,6 +1,6 @@
-from instructions import to_stack_registers
-from opcodes import INTERNAL_CALL_OPCODE
-from expressionblock import ExpressionBlock
+from .instructions import to_stack_registers
+from .opcodes import INTERNAL_CALL_OPCODE
+from .expressionblock import ExpressionBlock
 
 import os
 
@@ -166,7 +166,7 @@ class ExternalFunction(object):
         if block_id:
             self.graph[block_id].debug_block()
             return
-        print("\nfunction_" + hex(self.signature))
+        print(("\nfunction_" + hex(self.signature)))
         for basic_block in self.graph:
             basic_block.debug_block(0)
 
@@ -181,10 +181,10 @@ class InternalFunction(ExternalFunction):
 
         entry_size = self.tracker.get_observed_image(self.entry_id).top
         alpha, delta = self.action
-        self.reads = to_stack_registers(range(entry_size - alpha, entry_size))
+        self.reads = to_stack_registers(list(range(entry_size - alpha, entry_size)))
         self.reads.reverse()
         self.writes = to_stack_registers(
-            range(entry_size - alpha, entry_size - alpha + delta)
+            list(range(entry_size - alpha, entry_size - alpha + delta))
         )
         self.writes.reverse()
         return
@@ -270,11 +270,11 @@ class IfThen(Structure):
 
     def debug_block(self, depth):
         prefix = get_prefix(depth)
-        print(prefix + "IF")
+        print((prefix + "IF"))
         self.blocks[0].debug_block(depth + 1)
-        print(prefix + "THEN")
+        print((prefix + "THEN"))
         self.blocks[1].debug_block(depth + 1)
-        print(prefix + "FI")
+        print((prefix + "FI"))
 
     def dot_format_block(self, depth):
         prefix = get_prefix(depth)
@@ -296,13 +296,13 @@ class IfThenElse(Structure):
 
     def debug_block(self, depth):
         prefix = get_prefix(depth)
-        print(prefix + "IF")
+        print((prefix + "IF"))
         self.blocks[0].debug_block(depth + 1)
-        print(prefix + "THEN")
+        print((prefix + "THEN"))
         self.blocks[1].debug_block(depth + 1)
-        print(prefix + "ELSE")
+        print((prefix + "ELSE"))
         self.blocks[2].debug_block(depth + 1)
-        print(prefix + "FI")
+        print((prefix + "FI"))
 
     def dot_format_block(self, depth):
         prefix = get_prefix(depth)
@@ -325,11 +325,11 @@ class Loop(Structure):
 
     def debug_block(self, depth):
         prefix = get_prefix(depth)
-        print(prefix + "WHILE")
+        print((prefix + "WHILE"))
         self.blocks[0].debug_block(depth + 1)
-        print(prefix + "DO")
+        print((prefix + "DO"))
         self.blocks[1].debug_block(depth + 1)
-        print(prefix + "OD")
+        print((prefix + "OD"))
 
     def dot_format_block(self, depth):
         prefix = get_prefix(depth)

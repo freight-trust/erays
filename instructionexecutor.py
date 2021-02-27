@@ -1,5 +1,5 @@
-from baseexecutor import BaseExecutor
-from opcodes import call_ops
+from .baseexecutor import BaseExecutor
+from .opcodes import call_ops
 
 
 class InstructionExecutor(BaseExecutor):

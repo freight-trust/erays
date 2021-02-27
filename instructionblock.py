@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from instructions import NopInstruction
+from .instructions import NopInstruction
 
 
 class InstructionBlock:
@@ -54,11 +54,11 @@ class InstructionBlock:
     # 	print("")
 
     def debug_block(self, depth=0):
-        print("\nblock_%d" % self.get_id())
+        print(("\nblock_%d" % self.get_id()))
         # self.debug_phi_functions()
-        print(self.__entry_address)
+        print((self.__entry_address))
         for instruction in self.__instructions:
-            print(str(instruction.address) + "\t" + str(instruction).lower())
+            print((str(instruction.address) + "\t" + str(instruction).lower()))
         # print(" ".join(self.exit_registers))
 
     def get_instructions(self):

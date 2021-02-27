@@ -1,7 +1,7 @@
-from structurer import Structurer
-from structureexecutor import StructureExecutor
-from tracereader import EffectReader
-from ceptions import TimeoutException
+from .structurer import Structurer
+from .structureexecutor import StructureExecutor
+from .tracereader import EffectReader
+from .ceptions import TimeoutException
 
 import signal, sys
 

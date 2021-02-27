@@ -1,6 +1,6 @@
-from bytecodes import *
-from ceptions import IllegalInstructionError
-from opcodes import actions, dup_ops, swap_ops
+from .bytecodes import *
+from .ceptions import IllegalInstructionError
+from .opcodes import actions, dup_ops, swap_ops
 
 
 def union(list_1, list_2):
@@ -26,7 +26,7 @@ class Image(object):
 
     def debug_stack(self):
         for pos in sorted(self.stack.keys()):
-            print("%d\t%s" % (pos, str(self.stack[pos])))
+            print(("%d\t%s" % (pos, str(self.stack[pos]))))
         print("")
 
     def interpret_bytecode(self, bytecode):
@@ -65,7 +65,7 @@ class Image(object):
         other = Image(self.block_id)
         other.top = self.top
         stack_1, stack_2 = self.stack, other.stack
-        for pos, instructions in stack_1.items():
+        for pos, instructions in list(stack_1.items()):
             stack_2[pos] = instructions
         return other
 
@@ -76,10 +76,10 @@ class Image(object):
 
         temp, stack = Image(self.top), dict()
         stack_1, stack_2 = self.stack, other.stack
-        for pos, instructions in stack_1.items():
+        for pos, instructions in list(stack_1.items()):
             stack[pos] = instructions
 
-        for pos, instructions in stack_2.items():
+        for pos, instructions in list(stack_2.items()):
             if pos in stack:
                 result = union(stack[pos], instructions)
                 stack[pos] = result

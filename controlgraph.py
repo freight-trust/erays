@@ -1,4 +1,4 @@
-from bytecodeblock import *
+from .bytecodeblock import *
 
 from copy import deepcopy
 from operator import attrgetter
@@ -180,7 +180,7 @@ class ControlGraph(object):
             for dst_id in self.outgoing_edges[block_id]:
                 subgraph.add_edge(block_id, dst_id)
 
-        for block_id, color in self.marked_block_ids.items():
+        for block_id, color in list(self.marked_block_ids.items()):
             subgraph.mark_basic_block(block_id, color)
 
         subgraph.__indirect_jumps = deepcopy(self.__indirect_jumps)
@@ -235,14 +235,14 @@ class ControlGraph(object):
                     changed = True
                 self.dominators[block_id_1] = intersection_ids
 
-        for block_id, dominators in self.dominators.items():
+        for block_id, dominators in list(self.dominators.items()):
             dominators.remove(dummy_str_id)
         self.remove_block(dummy_str_id)
 
     def get_dominance_frontiers(self, entry_id):
         self.create_dominance_relation(entry_id)
         dominates_over = dict()
-        for cur_id, dominator_ids in self.dominators.items():
+        for cur_id, dominator_ids in list(self.dominators.items()):
             for dom_id in dominator_ids:
                 if dom_id not in dominates_over:
                     dominates_over[dom_id] = set()
@@ -250,7 +250,7 @@ class ControlGraph(object):
         dominance_frontiers = dict()
         for cur_id in self.get_block_ids():
             dominance_frontiers[cur_id] = set()
-        for cur_id, pre_ids in dominates_over.items():
+        for cur_id, pre_ids in list(dominates_over.items()):
             dominance_frontier = set()
             for pre_id in pre_ids:
                 dominance_frontier |= self.get_successor_ids(pre_id)
@@ -291,7 +291,7 @@ class ControlGraph(object):
 
     def create_post_dominance_relation(self):
         exit_ids = set()
-        for block_id, successor_ids in self.outgoing_edges.items():
+        for block_id, successor_ids in list(self.outgoing_edges.items()):
             if len(successor_ids) == 0:
                 exit_ids.add(block_id)
 
@@ -448,7 +448,7 @@ class ControlGraph(object):
     def get_complexity(self):
         branch_count = 0
         exit_count = 0
-        for basic_block in self.basic_blocks.values():
+        for basic_block in list(self.basic_blocks.values()):
             if basic_block.is_exit_block():
                 exit_count += 1
             elif basic_block.is_jumpi_block():
@@ -499,7 +499,7 @@ class ControlGraph(object):
         change = True
         while change:
             removed = set()
-            for block_id, block in self.get_blocks().items():
+            for block_id, block in list(self.get_blocks().items()):
                 if block_id in removed:
                     continue
                 suc_id = self.__can_merge(block_id)

@@ -1,8 +1,8 @@
-from opcodes import *
+from .opcodes import *
 
 from copy import deepcopy
 
-from opcodes import ADDRESS_MASK
+from .opcodes import ADDRESS_MASK
 
 TEMP_REGISTER = "$f"
 
@@ -55,7 +55,7 @@ class Expression(object):
 
     def contains_operations(self, targets):
         contains = self.opcode in targets
-        for index, expression in self.dependencies.items():
+        for index, expression in list(self.dependencies.items()):
             contains |= expression.contains_operations(targets)
         return contains
 

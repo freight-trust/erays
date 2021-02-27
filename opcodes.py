@@ -433,7 +433,7 @@ effect_ops = call_ops | log_ops | {"CREATE", "RETURN"}
 
 # if there is no more access its
 throw_away_ops = set(
-    bin_ops.keys() + mono_ops.keys() + ["MOVE", "NOP", "PASS"] + special_ops.keys()
+    list(bin_ops.keys()) + list(mono_ops.keys()) + ["MOVE", "NOP", "PASS"] + list(special_ops.keys())
 )
 
 INTERNAL_RETURN_OPCODE = "INTRET"

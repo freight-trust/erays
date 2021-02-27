@@ -1,10 +1,10 @@
-from controlgraph import *
-from ceptions import DependencyError
-from ceptions import JumpAddressError
-from image import Image
-from imagetracker import ImageTracker
-from resolver import DuplicateResolver
-from opcodes import *
+from .controlgraph import *
+from .ceptions import DependencyError
+from .ceptions import JumpAddressError
+from .image import Image
+from .imagetracker import ImageTracker
+from .resolver import DuplicateResolver
+from .opcodes import *
 
 
 class Interpreter(object):

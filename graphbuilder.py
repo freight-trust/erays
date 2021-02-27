@@ -1,9 +1,9 @@
-from disassembler import Disassembler
-from interpreter import BasicInterpreter
-from image import Image
-from structures import ExternalFunction
-from opcodes import exit_ops
-from resolver import BasicResolver
+from .disassembler import Disassembler
+from .interpreter import BasicInterpreter
+from .image import Image
+from .structures import ExternalFunction
+from .opcodes import exit_ops
+from .resolver import BasicResolver
 
 import sys, os
 
@@ -27,7 +27,7 @@ class GraphBuilder(Disassembler):
 
     def __init_resolver(self):
         self.resolver = BasicResolver(self.jump_dests)
-        for block in self.get_blocks().values():
+        for block in list(self.get_blocks().values()):
             exit_bytecode = block.get_exit_bytecode()
             opcode = exit_bytecode.opcode
             if opcode in exit_ops | {"JUMP"}:
@@ -80,14 +80,14 @@ class GraphBuilder(Disassembler):
 
     def __mark_signature_blocks(self):
         self.__signature_blocks = dict()
-        for block in self.graph.get_blocks().values():
+        for block in list(self.graph.get_blocks().values()):
             signature = block.get_function_signature()
             if signature != -1:
                 self.__signature_blocks[block.get_id()] = signature
 
     def __create_external_functions(self):
         self.external_functions = dict()
-        for cur_id, signature in self.__signature_blocks.items():
+        for cur_id, signature in list(self.__signature_blocks.items()):
             func = self.__create_external_function(cur_id, signature)
             self.external_functions[signature] = func
             # func.visualize_function()
@@ -136,7 +136,7 @@ class GraphBuilder(Disassembler):
         os.system("dot -Tpdf temp/temp.dot -o %s.pdf" % out_file)
 
     def debug_function_bytecodes(self):
-        for func in self.external_functions.values():
+        for func in list(self.external_functions.values()):
             func.debug_function()
 
 

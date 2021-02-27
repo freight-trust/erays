@@ -1,7 +1,7 @@
-from bytecodeblock import *
-from ceptions import *
-from opcodes import *
-from bytecodes import *
+from .bytecodeblock import *
+from .ceptions import *
+from .opcodes import *
+from .bytecodes import *
 
 from itertools import groupby
 import sys, re

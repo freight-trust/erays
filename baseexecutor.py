@@ -1,8 +1,8 @@
-from ceptions import OperationError, PoisonException, ValidationError
-from graphbuilder import FALLBACK_SIGNATURE
-from instructions import *
-from memorymodel import MemoryModel
-from opcodes import *
+from .ceptions import OperationError, PoisonException, ValidationError
+from .graphbuilder import FALLBACK_SIGNATURE
+from .instructions import *
+from .memorymodel import MemoryModel
+from .opcodes import *
 from copy import deepcopy
 
 WORD_MASK = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -101,7 +101,7 @@ class BaseExecutor:
             self.signature = FALLBACK_SIGNATURE
 
         if self.debug:
-            print(self.signature)
+            print((self.signature))
 
     def __init_machine_state(self):
         self.registers = dict()
@@ -141,7 +141,7 @@ class BaseExecutor:
 
     def execute_block(self, block):
         if self.debug:
-            print("block_%d" % block.get_id())
+            print(("block_%d" % block.get_id()))
         # self.debug_register()
 
         # self.memory.debug_memory()
@@ -150,7 +150,7 @@ class BaseExecutor:
         for item in block:
             if self.debug:
                 self.debug_register()
-                print(str(item.address) + "\t" + str(item).lower())
+                print((str(item.address) + "\t" + str(item).lower()))
                 # print(inputs)
 
                 pass
@@ -292,19 +292,19 @@ class BaseExecutor:
             raise ValidationError("outstanding operations")
 
     def debug_register(self):
-        print("-" * 32)
+        print(("-" * 32))
         registers = set(self.registers.keys()) - {"$t", "$m"}
         registers = sorted(registers, key=lambda x: int(x[2:]))
         for r in registers:
             value = "%x" % self.registers[r]
-            print(r + ":\t" + value)
+            print((r + ":\t" + value))
         # if "$t" in self.registers:
         for r in {"$t", "$m"}:
             if r not in self.registers:
                 continue
             value = "%x" % self.registers[r]
-            print(r + ":\t" + value)
-        print("-" * 32)
+            print((r + ":\t" + value))
+        print(("-" * 32))
 
     def issue_intcall(self, instruction, inputs):
         opcode = instruction.opcode

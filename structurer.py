@@ -1,5 +1,5 @@
-from aggregator import Aggregator
-from structures import *
+from .aggregator import Aggregator
+from .structures import *
 
 import sys
 

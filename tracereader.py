@@ -1,8 +1,8 @@
-from opcodes import *
-from ceptions import TraceError, TraceException, ValidationError, InputError
-from contextops import ContextOps, FreeOps, READ_POISON, EffectOps
+from .opcodes import *
+from .ceptions import TraceError, TraceException, ValidationError, InputError
+from .contextops import ContextOps, FreeOps, READ_POISON, EffectOps
 
-from graphbuilder import FALLBACK_SIGNATURE
+from .graphbuilder import FALLBACK_SIGNATURE
 
 import sys, json
 

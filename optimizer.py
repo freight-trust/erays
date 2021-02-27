@@ -1,12 +1,12 @@
-from structures import InternalFunction
-from lifter import Lifter
-from blockstate import ConstantState
-from blockstate import CopyState
-from blockstate import MemState
+from .structures import InternalFunction
+from .lifter import Lifter
+from .blockstate import ConstantState
+from .blockstate import CopyState
+from .blockstate import MemState
 
-from opcodes import *
-from baseexecutor import execute_binop, execute_monop
-from instructions import MoveInstruction, Instruction
+from .opcodes import *
+from .baseexecutor import execute_binop, execute_monop
+from .instructions import MoveInstruction, Instruction
 
 import sys, math
 
@@ -218,10 +218,10 @@ def __sha3_rewrites(block):
         if instruction.opcode == "SHA3":
             begin, end = instruction.reads
             if begin == 0 and not isinstance(end, str):
-                addresses = range(begin, end, 32)
+                addresses = list(range(begin, end, 32))
                 items = local_memory.lookup_mapping(addresses)
                 if len(items) != 0:
-                    values, indices = zip(*items)
+                    values, indices = list(zip(*items))
                     for i in indices:
                         block.set_nop_instruction(i)
                     operation = Instruction(
@@ -397,7 +397,7 @@ class Optimizer(Lifter):
                 if self.__outs[block_id] != new_out:
                     self.__outs[block_id] = new_out
                     change = True
-        for out in self.__outs.values():
+        for out in list(self.__outs.values()):
             out.add("$m")
 
     def __compute_use_def(self, block):

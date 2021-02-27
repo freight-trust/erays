@@ -1,4 +1,4 @@
-from opcodes import mem_write_ops, mem_read_ops, order_ops, throw_away_ops
+from .opcodes import mem_write_ops, mem_read_ops, order_ops, throw_away_ops
 
 TOP = "T"
 
@@ -8,11 +8,11 @@ class BlockState:
         self.mapping = dict()
 
     def debug_state(self):
-        print("-" * 32)
-        for reg, val in self.mapping.items():
+        print(("-" * 32))
+        for reg, val in list(self.mapping.items()):
             # if val != TOP:
-            print("\t" + reg + " : " + str(val))
-        print("-" * 32)
+            print(("\t" + reg + " : " + str(val)))
+        print(("-" * 32))
 
     def __eq__(self, other):
         return self.mapping == other.mapping
@@ -20,7 +20,7 @@ class BlockState:
 
 class ConstantState(BlockState):
     def join(self, other):
-        for reg, val2 in other.mapping.items():
+        for reg, val2 in list(other.mapping.items()):
             if reg not in self.mapping:
                 self.mapping[reg] = val2
             val1 = self.mapping[reg]
@@ -37,14 +37,14 @@ class ConstantState(BlockState):
                 self.mapping[write] = TOP  # cannot model
 
     def apply_mapping(self, instruction):
-        for reg, val in self.mapping.items():
+        for reg, val in list(self.mapping.items()):
             if val != TOP:
                 instruction.set_constant(reg, val)
 
 
 class CopyState(BlockState):
     def join(self, other):
-        for reg, val2 in other.mapping.items():
+        for reg, val2 in list(other.mapping.items()):
             if reg not in self.mapping:
                 self.mapping[reg] = val2
             val1 = self.mapping[reg]
@@ -62,7 +62,7 @@ class CopyState(BlockState):
 
         # then kill all invalidated copies
         for write in instruction.writes:
-            for k, v in self.mapping.items():
+            for k, v in list(self.mapping.items()):
                 if v == write:
                     self.mapping[k] = TOP
 
@@ -87,7 +87,7 @@ class MemState(BlockState):
             self.mapping.clear()
         else:
             for write in instruction.writes:
-                for k, (v, i) in self.mapping.items():
+                for k, (v, i) in list(self.mapping.items()):
                     if v == write:
                         del self.mapping[k]
 
@@ -103,7 +103,7 @@ class MemState(BlockState):
 
 class ExpressionState(BlockState):
     def apply_mapping(self, expression):
-        for r, e in self.mapping.items():
+        for r, e in list(self.mapping.items()):
             expression.set_dependency(r, e)
 
             # if expression.opcode == "SSTORE":
@@ -119,7 +119,7 @@ class ExpressionState(BlockState):
         if len(writes) == 0:
             return
         for write in expression.writes:
-            for r, e in self.mapping.items():
+            for r, e in list(self.mapping.items()):
                 if e.reads_register(write):
                     self.remove_mapping(r)
             self.remove_mapping(write)
@@ -136,6 +136,6 @@ class ExpressionState(BlockState):
             del self.mapping[register]
 
     def clear_entries(self, operations):
-        for r, e in self.mapping.items():
+        for r, e in list(self.mapping.items()):
             if e.contains_operations(operations):
                 del self.mapping[r]

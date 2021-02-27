@@ -1,7 +1,7 @@
-from expressionexecutor import ExpressionExecutor
-from aggregator import Aggregator
-from tracereader import EffectReader
-from ceptions import TimeoutException
+from .expressionexecutor import ExpressionExecutor
+from .aggregator import Aggregator
+from .tracereader import EffectReader
+from .ceptions import TimeoutException
 
 import signal, sys
 

@@ -1,7 +1,7 @@
-from instructionexecutor import InstructionExecutor
-from optimizer import Optimizer
-from tracereader import EffectReader, TraceReader
-from ceptions import TimeoutException
+from .instructionexecutor import InstructionExecutor
+from .optimizer import Optimizer
+from .tracereader import EffectReader, TraceReader
+from .ceptions import TimeoutException
 
 import signal, sys
 

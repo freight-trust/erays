@@ -1,7 +1,7 @@
-from instructionexecutor import InstructionExecutor
-from lifter import Lifter
-from tracereader import TraceReader, EffectReader
-from ceptions import TimeoutException
+from .instructionexecutor import InstructionExecutor
+from .lifter import Lifter
+from .tracereader import TraceReader, EffectReader
+from .ceptions import TimeoutException
 
 import signal, sys
 

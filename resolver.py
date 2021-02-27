@@ -1,6 +1,6 @@
-from ceptions import JumpAddressError
-from ceptions import StackSizeError
-from bytecodes import *
+from .ceptions import JumpAddressError
+from .ceptions import StackSizeError
+from .bytecodes import *
 
 
 def unfold_constant(bytecode):
@@ -51,7 +51,7 @@ class DuplicateResolver:
 
         self.head_addresses = dict()
         self.__allocate_id = 1000
-        for block_id, basic_block in basic_blocks.items():
+        for block_id, basic_block in list(basic_blocks.items()):
             entry_bytecode = basic_block.get_entry_bytecode()
             address = entry_bytecode.get_address()
             if entry_bytecode.is_jumpdest():

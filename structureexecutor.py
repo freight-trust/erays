@@ -1,7 +1,7 @@
-from baseexecutor import INTRETURN_ADDRESS
-from expressionblock import ExpressionBlock
-from expressionexecutor import ExpressionExecutor
-from structures import *
+from .baseexecutor import INTRETURN_ADDRESS
+from .expressionblock import ExpressionBlock
+from .expressionexecutor import ExpressionExecutor
+from .structures import *
 
 
 class StructureExecutor(ExpressionExecutor):

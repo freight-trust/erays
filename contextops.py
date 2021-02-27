@@ -1,6 +1,6 @@
-from ceptions import ValidationError
-from ceptions import PoisonException
-from opcodes import order_ops
+from .ceptions import ValidationError
+from .ceptions import PoisonException
+from .opcodes import order_ops
 
 READ_POISON = ("READ", -1)
 
@@ -45,8 +45,8 @@ class ContextOps:
             if i % 2 == 0:
                 print("")
             if isinstance(item, dict):
-                for k, v in item.items():
-                    print(k, v)
+                for k, v in list(item.items()):
+                    print((k, v))
             else:
                 print(item)
 
@@ -83,8 +83,8 @@ class FreeOps:
             return v
 
     def debug_mapping(self):
-        for k, v in self.__map.items():
-            print(k, v)
+        for k, v in list(self.__map.items()):
+            print((k, v))
 
 
 class EffectOps:
@@ -111,7 +111,7 @@ class EffectOps:
         return v.pop(0)
 
     def debug_mapping(self):
-        for k, v in self.__map.items():
+        for k, v in list(self.__map.items()):
             print(k)
 
     def reached_end_state(self):

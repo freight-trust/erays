@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 
 from os import walk
 import sys, signal
@@ -6,10 +6,10 @@ import sys, signal
 from datetime import datetime
 from multiprocessing import Process, Manager, Lock
 
-from aggregatortester import AggregatorTester
-from optimizertester import OptimizerTester
-from liftertester import LifterTester
-from structurertester import StructurerTester
+from .aggregatortester import AggregatorTester
+from .optimizertester import OptimizerTester
+from .liftertester import LifterTester
+from .structurertester import StructurerTester
 
 
 def eprint(*args, **kwargs):
@@ -56,18 +56,18 @@ def output_exception_report(path, exceptions, total):
     exception_report.write("=" * 20 + "\n")
 
     exception_types = dict()
-    for ex, _ in exceptions.values():
+    for ex, _ in list(exceptions.values()):
         exception_type = type(ex).__name__
         if exception_type not in exception_types:
             exception_types[exception_type] = 0
         exception_types[exception_type] += 1
 
-    for exception_type, c in exception_types.items():
+    for exception_type, c in list(exception_types.items()):
         exception_report.write("%s : %d\n" % (exception_type, c))
 
     exception_report.write("=" * 20 + "\n")
 
-    for count, (ex, code_size) in exceptions.items():
+    for count, (ex, code_size) in list(exceptions.items()):
         exception_report.write(
             "%s : %d [%s] %s\n" % (count, code_size, type(ex).__name__, str(ex))
         )
